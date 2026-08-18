@@ -76,9 +76,15 @@ export default async function GoalPage({ params }: Props) {
         </p>
 
         <div className="mt-6 flex flex-wrap gap-2">
-          {goal.relatedCategoryIds.map((categoryId) => (
-            <CategoryBadge key={categoryId} category={getCategory(categoryId)} linked />
-          ))}
+          {goal.relatedCategoryIds.length > 0 ? (
+            goal.relatedCategoryIds.map((categoryId) => (
+              <CategoryBadge key={categoryId} category={getCategory(categoryId)} linked />
+            ))
+          ) : (
+            <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600 ring-1 ring-slate-200">
+              カテゴリ横断
+            </span>
+          )}
         </div>
 
         <div className="mt-6 rounded-2xl border border-slate-100 bg-slate-50 p-5">
@@ -100,9 +106,9 @@ export default async function GoalPage({ params }: Props) {
         <div className="mt-10">
           <h2 className="text-lg font-bold text-slate-900">該当サービス</h2>
           {relatedServices.length > 0 ? (
-            <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
               {relatedServices.map((service) => (
-                <ServiceCard key={service.id} service={service} />
+                <ServiceCard key={service.id} service={service} compact={relatedServices.length > 6} />
               ))}
             </ul>
           ) : (

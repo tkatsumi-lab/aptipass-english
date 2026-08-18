@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import JsonLd from "@/components/JsonLd";
-import ServiceCard from "@/components/ServiceCard";
+import ServiceFilterList from "@/components/ServiceFilterList";
+import { categories } from "@/data/categories";
 import { services } from "@/data/services";
 import { buildItemListJsonLd, buildMetadata } from "@/lib/seo";
 
@@ -30,14 +31,12 @@ export default function ServicesPage() {
           サービス一覧
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-slate-500 sm:text-base">
-          掲載中の英語学習サービスです。カテゴリや特徴タグから、気になるサービスを見つけてください。
+          掲載中の英語学習サービスです。カテゴリやキーワードで絞り込んで探せます。
         </p>
 
-        <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => (
-            <ServiceCard key={service.id} service={service} />
-          ))}
-        </ul>
+        <div className="mt-8">
+          <ServiceFilterList services={services} categories={categories} />
+        </div>
       </section>
     </>
   );

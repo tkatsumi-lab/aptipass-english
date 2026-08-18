@@ -6,10 +6,31 @@ import CategoryBadge from "./CategoryBadge";
 
 type ServiceCardProps = {
   service: Service;
+  /** Denser layout for pages that can list many services (category/goal hubs) */
+  compact?: boolean;
 };
 
-export default function ServiceCard({ service }: ServiceCardProps) {
+export default function ServiceCard({ service, compact = false }: ServiceCardProps) {
   const primaryCategory = getCategory(service.categories[0]);
+
+  if (compact) {
+    return (
+      <li className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white p-3 shadow-sm transition-shadow hover:shadow-md">
+        <ServiceAvatar categoryId={service.categories[0]} initials={service.initials} size="sm" />
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-semibold text-slate-900">{service.name}</p>
+          <p className="truncate text-xs text-slate-500">{service.features[0]}</p>
+        </div>
+        <Link
+          href={`/services/${service.slug}`}
+          className={`shrink-0 text-xs font-semibold ${primaryCategory.chipText} hover:opacity-80`}
+        >
+          詳細
+          <span aria-hidden="true">→</span>
+        </Link>
+      </li>
+    );
+  }
 
   return (
     <li className="flex flex-col gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">

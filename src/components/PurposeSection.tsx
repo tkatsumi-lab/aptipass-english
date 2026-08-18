@@ -17,7 +17,8 @@ export default function PurposeSection() {
 
         <ul className="mt-10 flex snap-x gap-3 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible lg:grid-cols-4">
           {goals.map((goal) => {
-            const category = getCategory(goal.relatedCategoryIds[0]);
+            const category =
+              goal.relatedCategoryIds.length > 0 ? getCategory(goal.relatedCategoryIds[0]) : null;
             return (
               <li key={goal.id} className="min-w-[240px] snap-start sm:min-w-0">
                 <Link
@@ -30,11 +31,17 @@ export default function PurposeSection() {
                   <span className="text-sm font-semibold leading-snug text-slate-900">
                     {goal.label}
                   </span>
-                  <span
-                    className={`inline-flex w-fit items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium ring-1 ${category.chipBg} ${category.chipText} ${category.chipRing}`}
-                  >
-                    {category.name}
-                  </span>
+                  {category ? (
+                    <span
+                      className={`inline-flex w-fit items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium ring-1 ${category.chipBg} ${category.chipText} ${category.chipRing}`}
+                    >
+                      {category.name}
+                    </span>
+                  ) : (
+                    <span className="inline-flex w-fit items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-200">
+                      カテゴリ横断
+                    </span>
+                  )}
                 </Link>
               </li>
             );

@@ -102,9 +102,9 @@ export default async function CategoryPage({ params }: Props) {
         <div className="mt-10">
           <h2 className="text-lg font-bold text-slate-900">該当サービス</h2>
           {relatedServices.length > 0 ? (
-            <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
               {relatedServices.map((service) => (
-                <ServiceCard key={service.id} service={service} />
+                <ServiceCard key={service.id} service={service} compact={relatedServices.length > 6} />
               ))}
             </ul>
           ) : (

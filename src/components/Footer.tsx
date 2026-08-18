@@ -12,8 +12,8 @@ const footerColumns = [
   {
     title: "運営",
     links: [
-      { label: "運営情報", href: "#" },
-      { label: "広告掲載について", href: "#" },
+      { label: "運営情報・掲載基準", href: "/about" },
+      { label: "広告・Affiliateについて", href: "/about#affiliate-policy" },
       { label: "プライバシー", href: "#" },
       { label: "お問い合わせ", href: "#" },
     ],

@@ -7,12 +7,14 @@ import DecisionCTA from "@/components/DecisionCTA";
 import ServiceAvatar from "@/components/ServiceAvatar";
 import { getCategory } from "@/data/categories";
 import { comparePairs } from "@/data/comparePairs";
-import { goals } from "@/data/goals";
+import { getServicesForGoal, goals } from "@/data/goals";
 import { getServiceBySlug, getServicesByCategory, services } from "@/data/services";
 import {
   learningStyleLabels,
   platformTypeLabels,
+  pricingModelLabels,
   teacherTypeLabels,
+  trialAvailabilityLabels,
 } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
@@ -51,7 +53,7 @@ export default async function ServiceDetailPage({ params }: Props) {
     pair.serviceIds.includes(service.id),
   );
   const relatedGoals = goals.filter((goal) =>
-    goal.relatedCategoryIds.some((c) => service.categories.includes(c)),
+    getServicesForGoal(goal).some((s) => s.id === service.id),
   );
 
   const breadcrumbItems = [
@@ -117,37 +119,54 @@ export default async function ServiceDetailPage({ params }: Props) {
         )}
 
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {(service.learningStyle || service.teacherType || service.platformType.length > 0) && (
-            <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm sm:col-span-2">
-              <h2 className="text-sm font-semibold text-slate-900">基本情報</h2>
-              <dl className="mt-3 grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
-                {service.learningStyle && (
-                  <div>
-                    <dt className="text-xs text-slate-400">学び方</dt>
-                    <dd className="text-slate-700">
-                      {learningStyleLabels[service.learningStyle]}
-                    </dd>
-                  </div>
-                )}
-                {service.teacherType && (
-                  <div>
-                    <dt className="text-xs text-slate-400">講師</dt>
-                    <dd className="text-slate-700">
-                      {teacherTypeLabels[service.teacherType]}
-                    </dd>
-                  </div>
-                )}
-                {service.platformType.length > 0 && (
-                  <div>
-                    <dt className="text-xs text-slate-400">利用方法</dt>
-                    <dd className="text-slate-700">
-                      {service.platformType.map((p) => platformTypeLabels[p]).join(" / ")}
-                    </dd>
-                  </div>
-                )}
-              </dl>
-            </div>
-          )}
+          <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm sm:col-span-2">
+            <h2 className="text-sm font-semibold text-slate-900">基本情報</h2>
+            <dl className="mt-3 grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
+              {service.learningStyle && (
+                <div>
+                  <dt className="text-xs text-slate-400">学び方</dt>
+                  <dd className="text-slate-700">
+                    {learningStyleLabels[service.learningStyle]}
+                  </dd>
+                </div>
+              )}
+              {service.teacherType && (
+                <div>
+                  <dt className="text-xs text-slate-400">講師</dt>
+                  <dd className="text-slate-700">
+                    {teacherTypeLabels[service.teacherType]}
+                  </dd>
+                </div>
+              )}
+              {service.platformType.length > 0 && (
+                <div>
+                  <dt className="text-xs text-slate-400">利用方法</dt>
+                  <dd className="text-slate-700">
+                    {service.platformType.map((p) => platformTypeLabels[p]).join(" / ")}
+                  </dd>
+                </div>
+              )}
+              {service.pricingModel && (
+                <div>
+                  <dt className="text-xs text-slate-400">料金体系</dt>
+                  <dd className="text-slate-700">{pricingModelLabels[service.pricingModel]}</dd>
+                </div>
+              )}
+              <div>
+                <dt className="text-xs text-slate-400">無料体験</dt>
+                <dd className="text-slate-700">{trialAvailabilityLabels[service.trialAvailability]}</dd>
+              </div>
+              {service.examSupport.length > 0 && (
+                <div>
+                  <dt className="text-xs text-slate-400">対応資格・試験</dt>
+                  <dd className="text-slate-700">{service.examSupport.join(" / ")}</dd>
+                </div>
+              )}
+            </dl>
+            <p className="mt-3 text-xs text-slate-400">
+              具体的な料金は変更されることがあるため、最新情報は公式サイトでご確認ください。
+            </p>
+          </div>
 
           <div className="rounded-2xl border border-emerald-100 bg-emerald-50/50 p-5">
             <h2 className="text-sm font-semibold text-emerald-800">
