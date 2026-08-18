@@ -1,6 +1,6 @@
-import { getCategory } from "@/data/categories";
+import Link from "next/link";
 import { services } from "@/data/services";
-import ServiceAvatar from "./ServiceAvatar";
+import ServiceCard from "./ServiceCard";
 
 export default function FeaturedServices() {
   return (
@@ -15,52 +15,20 @@ export default function FeaturedServices() {
       </div>
 
       <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {services.map((service) => {
-          const category = getCategory(service.categoryId);
-          return (
-            <li
-              key={service.id}
-              className="flex flex-col gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
-            >
-              <div className="flex items-center gap-3">
-                <ServiceAvatar
-                  categoryId={service.categoryId}
-                  initials={service.initials}
-                />
-                <div>
-                  <p className="text-base font-semibold text-slate-900">
-                    {service.name}
-                  </p>
-                  <span
-                    className={`mt-1 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ${category.chipBg} ${category.chipText} ${category.chipRing}`}
-                  >
-                    {category.name}
-                  </span>
-                </div>
-              </div>
-
-              <ul className="flex flex-wrap gap-1.5">
-                {service.tags.map((tag) => (
-                  <li
-                    key={tag}
-                    className="rounded-full bg-slate-50 px-2.5 py-1 text-xs text-slate-600"
-                  >
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-
-              <a
-                href="#"
-                className="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700"
-              >
-                詳しく見る
-                <span aria-hidden="true">→</span>
-              </a>
-            </li>
-          );
-        })}
+        {services.map((service) => (
+          <ServiceCard key={service.id} service={service} />
+        ))}
       </ul>
+
+      <div className="mt-8 text-center">
+        <Link
+          href="/services"
+          className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700"
+        >
+          サービス一覧をすべて見る
+          <span aria-hidden="true">→</span>
+        </Link>
+      </div>
     </section>
   );
 }

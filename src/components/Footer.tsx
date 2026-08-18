@@ -1,10 +1,12 @@
+import Link from "next/link";
+
 const footerColumns = [
   {
     title: "サイトについて",
     links: [
-      { label: "サービス一覧", href: "#featured" },
-      { label: "比較", href: "#comparison" },
-      { label: "英語学習ガイド", href: "#guide" },
+      { label: "サービス一覧", href: "/services" },
+      { label: "比較", href: "/compare" },
+      { label: "英語学習ガイド", href: "/guides" },
     ],
   },
   {
@@ -40,12 +42,12 @@ export default function Footer() {
               <ul className="mt-3 space-y-2">
                 {column.links.map((link) => (
                   <li key={link.label}>
-                    <a
+                    <Link
                       href={link.href}
                       className="text-sm text-slate-400 transition-colors hover:text-white"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

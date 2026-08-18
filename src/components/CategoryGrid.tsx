@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { categories } from "@/data/categories";
 
 export default function CategoryGrid() {
@@ -15,8 +16,8 @@ export default function CategoryGrid() {
       <ul className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
         {categories.map((category) => (
           <li key={category.id}>
-            <a
-              href="#featured"
+            <Link
+              href={`/categories/${category.slug}`}
               className="group flex h-full flex-col gap-3 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md sm:p-5"
             >
               <span
@@ -30,10 +31,10 @@ export default function CategoryGrid() {
                   {category.name}
                 </span>
                 <span className="mt-0.5 block text-xs text-slate-500 sm:text-sm">
-                  {category.description}
+                  {category.shortDescription}
                 </span>
               </span>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

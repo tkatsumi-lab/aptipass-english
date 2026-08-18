@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   comparisonRows,
   comparisonServices,
@@ -29,7 +30,7 @@ export default function ComparisonPreview() {
                 {comparisonServices.map((service) => {
                   const serviceData = services.find((s) => s.id === service.id);
                   const category = serviceData
-                    ? getCategory(serviceData.categoryId)
+                    ? getCategory(serviceData.categories[0])
                     : undefined;
                   return (
                     <th
@@ -39,16 +40,19 @@ export default function ComparisonPreview() {
                         category?.gradient ?? "from-blue-500 to-blue-600"
                       }`}
                     >
-                      <div className="flex items-center gap-2">
+                      <Link
+                        href={serviceData ? `/services/${serviceData.slug}` : "#"}
+                        className="flex items-center gap-2 hover:opacity-90"
+                      >
                         {serviceData && (
                           <ServiceAvatar
-                            categoryId={serviceData.categoryId}
+                            categoryId={serviceData.categories[0]}
                             initials={serviceData.initials}
                             size="sm"
                           />
                         )}
                         {service.name}
-                      </div>
+                      </Link>
                     </th>
                   );
                 })}
@@ -77,9 +81,18 @@ export default function ComparisonPreview() {
           </table>
         </div>
 
-        <p className="mt-4 text-center text-xs text-slate-400">
-          料金・利用者数などの数値情報は今後追加予定です。
-        </p>
+        <div className="mt-4 flex flex-col items-center gap-2">
+          <p className="text-center text-xs text-slate-400">
+            料金・利用者数などの数値情報は今後追加予定です。
+          </p>
+          <Link
+            href="/compare"
+            className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700"
+          >
+            すべての比較を見る
+            <span aria-hidden="true">→</span>
+          </Link>
+        </div>
       </div>
     </section>
   );

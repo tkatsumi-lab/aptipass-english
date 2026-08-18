@@ -1,33 +1,30 @@
+import type { Metadata } from "next";
 import CategoryGrid from "@/components/CategoryGrid";
 import ComparisonPreview from "@/components/ComparisonPreview";
 import DecisionCTA from "@/components/DecisionCTA";
 import FeaturedServices from "@/components/FeaturedServices";
-import Footer from "@/components/Footer";
 import GuideCards from "@/components/GuideCards";
-import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import PurposeSection from "@/components/PurposeSection";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "英語学習サービスを比較・探す | AptiPass English",
+  description:
+    "オンライン英会話、AI英会話、英語学習アプリなどを目的や特徴から比較できる英語学習サービス情報サイト。",
+  path: "/",
+});
 
 export default function Home() {
   return (
-    <div className="flex min-h-full flex-col bg-white">
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-blue-700 focus:shadow-lg"
-      >
-        メインコンテンツへスキップ
-      </a>
-      <Header />
-      <main id="main-content" className="flex-1">
-        <Hero />
-        <CategoryGrid />
-        <PurposeSection />
-        <FeaturedServices />
-        <ComparisonPreview />
-        <DecisionCTA />
-        <GuideCards />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <Hero />
+      <CategoryGrid />
+      <PurposeSection />
+      <FeaturedServices />
+      <ComparisonPreview />
+      <DecisionCTA />
+      <GuideCards />
+    </>
   );
 }

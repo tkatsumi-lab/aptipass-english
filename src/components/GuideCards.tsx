@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { guides } from "@/data/guides";
 
 export default function GuideCards() {
@@ -15,8 +16,8 @@ export default function GuideCards() {
       <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
         {guides.map((guide) => (
           <li key={guide.id}>
-            <a
-              href="#"
+            <Link
+              href={`/guides/${guide.slug}`}
               className="flex h-full items-start gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
             >
               <span
@@ -37,7 +38,7 @@ export default function GuideCards() {
                   <span aria-hidden="true">→</span>
                 </span>
               </span>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+> **Site architecture, URL rules, SEO rules, and the Service/Category/Goal
+> data model are documented in [`docs/architecture.md`](./docs/architecture.md).
+> Read it before adding pages or changing the Information Architecture.**
+
 ## Getting Started
 
 First, run the development server:

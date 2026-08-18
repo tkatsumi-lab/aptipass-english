@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { getCategory } from "@/data/categories";
-import { purposes } from "@/data/purposes";
+import { goals } from "@/data/goals";
 
 export default function PurposeSection() {
   return (
@@ -15,26 +16,26 @@ export default function PurposeSection() {
         </div>
 
         <ul className="mt-10 flex snap-x gap-3 overflow-x-auto pb-2 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible lg:grid-cols-4">
-          {purposes.map((purpose) => {
-            const category = getCategory(purpose.categoryId);
+          {goals.map((goal) => {
+            const category = getCategory(goal.relatedCategoryIds[0]);
             return (
-              <li key={purpose.id} className="min-w-[240px] snap-start sm:min-w-0">
-                <a
-                  href="#featured"
+              <li key={goal.id} className="min-w-[240px] snap-start sm:min-w-0">
+                <Link
+                  href={`/goals/${goal.slug}`}
                   className="flex h-full flex-col justify-between gap-4 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-100 transition-all hover:-translate-y-1 hover:shadow-md"
                 >
                   <span className="text-2xl" aria-hidden="true">
-                    {purpose.emoji}
+                    {goal.emoji}
                   </span>
                   <span className="text-sm font-semibold leading-snug text-slate-900">
-                    {purpose.label}
+                    {goal.label}
                   </span>
                   <span
                     className={`inline-flex w-fit items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium ring-1 ${category.chipBg} ${category.chipText} ${category.chipRing}`}
                   >
                     {category.name}
                   </span>
-                </a>
+                </Link>
               </li>
             );
           })}
