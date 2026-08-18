@@ -5,6 +5,8 @@ import Breadcrumb from "@/components/Breadcrumb";
 import CategoryBadge from "@/components/CategoryBadge";
 import DecisionCTA from "@/components/DecisionCTA";
 import ServiceAvatar from "@/components/ServiceAvatar";
+import ServiceCtaLink from "@/components/ServiceCtaLink";
+import ServiceViewTracker from "@/components/ServiceViewTracker";
 import { getCategory } from "@/data/categories";
 import { comparePairs } from "@/data/comparePairs";
 import { getServicesForGoal, goals } from "@/data/goals";
@@ -64,6 +66,7 @@ export default async function ServiceDetailPage({ params }: Props) {
   return (
     <>
       <Breadcrumb items={breadcrumbItems} />
+      <ServiceViewTracker serviceId={service.id} />
 
       <section className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
         <div className="flex items-start gap-4">
@@ -95,28 +98,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           ))}
         </ul>
 
-        {service.officialUrl && (
-          <a
-            href={service.officialUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`mt-6 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-105 ${primaryCategory.gradient}`}
-          >
-            公式サイトを見る
-            <span aria-hidden="true">↗</span>
-          </a>
-        )}
-
-        {service.affiliateUrl && (
-          <a
-            href={service.affiliateUrl}
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            className="ml-3 mt-6 inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-6 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-          >
-            お得な申し込み経路を見る
-          </a>
-        )}
+        <ServiceCtaLink service={service} primaryCategory={primaryCategory} />
 
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm sm:col-span-2">

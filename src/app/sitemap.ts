@@ -8,7 +8,17 @@ import { SITE_URL } from "@/lib/seo";
 const LAST_MODIFIED = new Date("2026-08-18");
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPaths = ["/", "/services", "/compare", "/guides", "/about"];
+  const staticPaths = [
+    "/",
+    "/services",
+    "/compare",
+    "/guides",
+    "/about",
+    "/editorial-policy",
+    "/advertising-policy",
+    "/privacy",
+    // /contact is intentionally excluded — thin "in preparation" content, marked noindex.
+  ];
 
   const dynamicPaths = [
     ...services.map((s) => `/services/${s.slug}`),

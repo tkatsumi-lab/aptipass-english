@@ -12,10 +12,16 @@ const footerColumns = [
   {
     title: "運営",
     links: [
-      { label: "運営情報・掲載基準", href: "/about" },
-      { label: "広告・Affiliateについて", href: "/about#affiliate-policy" },
-      { label: "プライバシー", href: "#" },
-      { label: "お問い合わせ", href: "#" },
+      { label: "AptiPass Englishについて", href: "/about" },
+      { label: "編集方針・掲載基準", href: "/editorial-policy" },
+      { label: "お問い合わせ", href: "/contact" },
+    ],
+  },
+  {
+    title: "ポリシー",
+    links: [
+      { label: "広告・Affiliateについて", href: "/advertising-policy" },
+      { label: "プライバシーポリシー", href: "/privacy" },
     ],
   },
 ];
@@ -24,7 +30,7 @@ export default function Footer() {
   return (
     <footer className="bg-slate-900 text-slate-300">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-lg font-extrabold text-transparent">
               AptiPass English
@@ -56,8 +62,7 @@ export default function Footer() {
         </div>
 
         <p className="mt-10 border-t border-slate-800 pt-6 text-xs text-slate-500">
-          &copy; {new Date().getFullYear()} AptiPass English. This is a
-          prototype site.
+          &copy; {new Date().getFullYear()} AptiPass English
         </p>
       </div>
     </footer>

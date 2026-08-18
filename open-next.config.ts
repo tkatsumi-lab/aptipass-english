@@ -1,9 +1,14 @@
-// default open-next.config.ts file created by @opennextjs/cloudflare
 import { defineCloudflareConfig } from "@opennextjs/cloudflare";
-// import r2IncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/r2-incremental-cache";
+import staticAssetsIncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/static-assets-incremental-cache";
 
+// This site is fully static: every route uses generateStaticParams with
+// dynamicParams = false (see docs/architecture.md), so there is no ISR/
+// revalidation to support. staticAssetsIncrementalCache serves prerendered
+// pages straight from Workers Static Assets — no R2/KV binding needed.
+// Without this, dynamic ([slug]) routes 404 in the Workers runtime because
+// the default cache has nothing to read from (see docs/architecture.md's
+// "Cloudflare caching" note).
 export default defineCloudflareConfig({
-	// For best results consider enabling R2 caching
-	// See https://opennext.js.org/cloudflare/caching for more details
-	// incrementalCache: r2IncrementalCache
+	incrementalCache: staticAssetsIncrementalCache,
+	enableCacheInterception: true,
 });

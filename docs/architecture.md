@@ -156,7 +156,73 @@ later:
 
 ## Decision Engine Handoff
 
-The `DecisionCTA` component is a placeholder (`href="#"`) on every
-major page. It intentionally does not link to a guessed
-`aptipass.com` URL — wire it up once the real Decision Engine endpoint
-for AptiPass English is confirmed.
+`DecisionCTA` links to `https://aptipass.com/english-learning/find-your-english-learning-method`
+(Phase 0.5). This was found by reading `ai-decision-engine`'s own
+generated-content route list (`src/lib/content/generated/registry.ts`,
+`(public)/[category]/[slug]` routing) read-only, then confirmed live
+with a plain `curl` — not guessed. If this URL ever 404s, don't
+substitute a guessed replacement; re-derive it the same way (read-only)
+or fall back to `href="#"` and flag it.
+
+## Affiliate Registry & CTA Resolver
+
+`src/data/affiliateRegistry.ts` is the **only** place an affiliate
+(ASP) URL is allowed to appear. `src/lib/ctaResolver.ts` reads it and
+decides a service's outbound CTA: an `AFFILIATED` program with a real
+`destinationUrl` wins, otherwise it always falls back to the service's
+`officialUrl`. Registering a `Service` never implies an affiliate
+relationship — a program is added only once verified by the site
+operator (see each entry's `notes`).
+
+A program is scoped to one exact `serviceId`, not a brand. E.g. the
+A8 program for QQキッズ (`qq-kids`) does **not** apply to QQEnglish
+(`qqenglish`) even though the same company runs both — they're
+different Service records for a reason. When adding a new affiliate
+program, double-check which exact Service the ad creative is actually
+for before wiring it up.
+
+`src/components/ServiceCtaLink.tsx` renders the resolved CTA, the
+`rel="sponsored nofollow noopener"` attribute, the required disclosure
+line, and (for A8) the 1x1 tracking pixel — all three only when the
+resolved type is `"affiliate"`. Don't render any of those for an
+official-only CTA.
+
+## Analytics Foundation
+
+`src/lib/analytics.ts` defines the event vocabulary
+(`service_view`, `service_cta_click`, `affiliate_cta_click`,
+`official_cta_click`, `compare_service_click`, `decision_cta_click`)
+and a `track()` that no-ops until `window.dataLayer` exists. No
+provider ID is hardcoded anywhere — `NEXT_PUBLIC_GA_MEASUREMENT_ID`
+(read in `src/app/layout.tsx`) gates whether the gtag.js script tag
+renders at all. Don't add a real ID to this repo; set it as a
+Cloudflare Worker environment variable when a provider is actually
+chosen.
+
+## Cloudflare Caching — read before touching `open-next.config.ts`
+
+This site is 100% static (`dynamicParams = false` + a complete
+`generateStaticParams` on every dynamic route — see Site Architecture
+above). `open-next.config.ts` therefore uses
+`staticAssetsIncrementalCache` (serves prerendered pages straight from
+Workers Static Assets, no R2/KV binding) with `enableCacheInterception:
+true`.
+
+**This is not optional.** Without an incremental cache configured at
+all, every `generateStaticParams` route (`/services/[slug]`,
+`/categories/[slug]`, `/goals/[slug]`, `/compare/[slug]`,
+`/guides/[slug]` — the large majority of the site) returns a silent
+404 under the real Workers runtime (`wrangler dev` / `preview` /
+production), even though `npm run dev` and `npm run build` both look
+completely fine. This was caught in Phase 0.5 by actually curling
+dynamic routes through `opennextjs-cloudflare preview` — checking only
+`npm run dev`/`npm run build` does **not** catch this class of bug.
+Also note the cache only takes effect once populated: `preview` and
+`deploy` both call `populateCache` automatically (copies
+`.open-next/cache` → `.open-next/assets/cdn-cgi/_next_cache`), but a
+bare `opennextjs-cloudflare build` does not — always verify through
+`preview`, not just `build`, before deploying.
+
+If this project ever needs real ISR/on-demand revalidation, switch to
+`r2IncrementalCache` (see the OpenNext Cloudflare caching docs) — but
+that's a deliberate architecture change, not a drop-in swap.

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import DecisionCTA from "@/components/DecisionCTA";
 import ServiceAvatar from "@/components/ServiceAvatar";
+import TrackedLink from "@/components/TrackedLink";
 import { getCategory } from "@/data/categories";
 import { comparePairs, getComparePairBySlug } from "@/data/comparePairs";
 import { getServicesByIds } from "@/data/services";
+import { AnalyticsEvent } from "@/lib/analytics";
 import { buildMetadata } from "@/lib/seo";
 
 export const dynamicParams = false;
@@ -61,14 +62,16 @@ export default async function ComparePairPage({ params }: Props) {
 
         <div className="mt-8 grid grid-cols-2 gap-4">
           {[a, b].map((service) => (
-            <Link
+            <TrackedLink
               key={service.id}
               href={`/services/${service.slug}`}
+              event={AnalyticsEvent.COMPARE_SERVICE_CLICK}
+              eventParams={{ service_id: service.id, compare_slug: pair.slug }}
               className="flex flex-col items-center gap-2 rounded-2xl border border-slate-100 bg-white p-5 text-center shadow-sm transition-shadow hover:shadow-md"
             >
               <ServiceAvatar categoryId={service.categories[0]} initials={service.initials} />
               <p className="text-sm font-semibold text-slate-900">{service.name}</p>
-            </Link>
+            </TrackedLink>
           ))}
         </div>
 
