@@ -174,7 +174,7 @@ export function getServicesForGoal(goal: Goal): Service[] {
     pool.push(...services);
   }
 
-  const filter = goalFilters[goal.id];
+  const filter = goalFilters[goal.slug];
   return filter ? pool.filter(filter) : pool;
 }
 
