@@ -26,6 +26,23 @@ import { buildWebSiteJsonLd } from "@/lib/seo";
 // the tag loads independently of hydration succeeding.
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
+// Cloudflare Web Analytics (separate, independent measurement system from
+// GA4 above — its own beacon endpoint, no shared dataLayer/gtag, so there
+// is no double-counting risk between the two). Same beforeInteractive +
+// root-layout placement as GA4, for the same reason: this must appear as
+// a literal <script> tag in the server-rendered HTML to be verifiable and
+// to not depend on hydration completing. NEXT_PUBLIC_CF_BEACON_TOKEN is a
+// build-time value baked into the static HTML — see .env.production.
+//
+// Loads on every route rendered under this root layout, including
+// /admin/affiliate: excluding it would require either broadening
+// middleware.ts's matcher (currently scoped to /admin/:path* only) to
+// inject a pathname header, or restructuring the whole app into route
+// groups — both are site-wide changes disproportionate to excluding one
+// internal page from analytics. GA4 already has this same characteristic
+// today, so this doesn't introduce a new gap.
+const CF_BEACON_TOKEN = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -65,6 +82,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               `}
             </Script>
           </>
+        )}
+        {CF_BEACON_TOKEN && (
+          <Script
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            strategy="beforeInteractive"
+            data-cf-beacon={JSON.stringify({ token: CF_BEACON_TOKEN })}
+          />
         )}
         <JsonLd data={buildWebSiteJsonLd()} />
         <a
