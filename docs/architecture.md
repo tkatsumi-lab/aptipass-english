@@ -187,17 +187,48 @@ line, and (for A8) the 1x1 tracking pixel — all three only when the
 resolved type is `"affiliate"`. Don't render any of those for an
 official-only CTA.
 
-## Analytics Foundation
+## Analytics (GA4)
 
-`src/lib/analytics.ts` defines the event vocabulary
-(`service_view`, `service_cta_click`, `affiliate_cta_click`,
-`official_cta_click`, `compare_service_click`, `decision_cta_click`)
-and a `track()` that no-ops until `window.dataLayer` exists. No
-provider ID is hardcoded anywhere — `NEXT_PUBLIC_GA_MEASUREMENT_ID`
-(read in `src/app/layout.tsx`) gates whether the gtag.js script tag
-renders at all. Don't add a real ID to this repo; set it as a
-Cloudflare Worker environment variable when a provider is actually
-chosen.
+Live: AptiPass English has its own GA4 property, `G-UEQ9L0P5NN`,
+separate from aptipass.com's. gtag.js is loaded directly in
+`src/app/layout.tsx` (`next/script`, `strategy="afterInteractive"`,
+Google's own base snippet — no GTM container, no `@next/third-parties`
+or other added dependency).
+
+`NEXT_PUBLIC_GA_MEASUREMENT_ID` is set in `.env.production`
+(**intentionally committed** — a GA4 Measurement ID isn't a secret,
+it's visible in every page's HTML source anyway). This is a
+**build-time** value: the whole site is static
+(`next build`/`opennextjs-cloudflare build`), so it's baked into the
+prerendered HTML rather than read per-request by the Worker — a
+`vars` entry in `wrangler.jsonc` would *not* work for this. If the ID
+ever needs to change, edit `.env.production` and redeploy; don't add a
+Workers runtime binding for it.
+
+`src/lib/analytics.ts` defines the event vocabulary (`service_view`,
+`service_cta_click`, `affiliate_cta_click`, `official_cta_click`,
+`compare_service_click`, `decision_cta_click`) and `track()`, which
+calls `window.gtag('event', name, params)` — **not**
+`dataLayer.push({event, ...})` (that's the GTM-container convention;
+bare gtag.js on this page doesn't listen for it). `track()` no-ops
+safely if `window.gtag` isn't defined.
+
+GA4 Enhanced Measurement (scroll, outbound click, site search, video
+engagement, file download, form interaction, and automatic SPA
+`page_view` via History API changes) is left at its default — nothing
+here sets `send_page_view: false` or otherwise touches it. Do not add
+a manual `page_view` call on route change; Enhanced Measurement's own
+History-based tracking already covers Next.js App Router navigation,
+and adding a second mechanism would double-count. An affiliate/official
+CTA click also fires GA4's generic `click` (outbound) event from
+Enhanced Measurement alongside the custom `affiliate_cta_click`/
+`official_cta_click` — that's expected, and the two never merge since
+they're different event names.
+
+Only `service_view` is wired to a live page. The same
+`ServiceViewTracker` one-line pattern extends directly to
+`category_view`/`goal_view`/`compare_view`/`guide_view` if those are
+ever wanted — don't add them speculatively.
 
 ## Cloudflare Caching — read before touching `open-next.config.ts`
 

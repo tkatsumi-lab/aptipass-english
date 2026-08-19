@@ -32,6 +32,9 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# NEXT_PUBLIC_GA_MEASUREMENT_ID only — not a secret, needed for `next build`
+# to bake in AptiPass English's GA4 ID. See .env.production for details.
+!.env.production
 
 # vercel
 .vercel

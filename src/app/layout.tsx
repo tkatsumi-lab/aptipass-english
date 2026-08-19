@@ -7,10 +7,12 @@ import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 import { buildWebSiteJsonLd } from "@/lib/seo";
 
-// Analytics Foundation: no ID is hardcoded or guessed. The gtag.js loader
-// only renders once NEXT_PUBLIC_GA_MEASUREMENT_ID is set in the deployment
-// environment — until then this is entirely inert, and src/lib/analytics.ts's
-// track() stays a safe no-op (no window.dataLayer to push into).
+// AptiPass English's own GA4 property (separate from aptipass.com's).
+// NEXT_PUBLIC_GA_MEASUREMENT_ID comes from .env.production — see
+// src/lib/analytics.ts for why this is a build-time value, not a Workers
+// runtime binding, and why committing that file is intentional (a GA4
+// Measurement ID isn't a secret). The `if (GA_MEASUREMENT_ID)` guard is
+// kept so the site still builds/runs correctly if it's ever unset.
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 const geistSans = Geist({
