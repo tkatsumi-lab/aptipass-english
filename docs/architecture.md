@@ -226,3 +226,16 @@ bare `opennextjs-cloudflare build` does not — always verify through
 If this project ever needs real ISR/on-demand revalidation, switch to
 `r2IncrementalCache` (see the OpenNext Cloudflare caching docs) — but
 that's a deliberate architecture change, not a drop-in swap.
+
+## Site Audit Script
+
+`scripts/site-audit.mjs` (`npm run audit` for localhost, `npm run
+audit:prod` for `https://english.aptipass.com`) crawls the site from
+its main entry points and checks the regressions that are easy to miss
+as content grows: duplicate title/description, missing/wrong-host
+canonical, H1 count, broken internal links, and sitemap↔crawl
+consistency (pages missing from the sitemap, stale/extra sitemap
+entries, duplicate sitemap URLs). It exits non-zero on any failure.
+Run it after any change that touches routing, metadata, or the
+service/category/goal/compare/guide data — and definitely before
+deploying a batch of new content.

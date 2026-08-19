@@ -79,7 +79,7 @@ export default async function ComparePairPage({ params }: Props) {
           <table className="w-full min-w-[420px] border-collapse bg-white text-left text-sm">
             <thead>
               <tr>
-                <th scope="col" className="w-32 bg-white p-4 text-xs font-medium text-slate-400">
+                <th scope="col" className="sticky left-0 z-10 w-32 bg-white p-4 text-xs font-medium text-slate-400">
                   比較ポイント
                 </th>
                 <th scope="col" className={`bg-gradient-to-br p-4 font-semibold text-white ${categoryA.gradient}`}>
@@ -93,7 +93,10 @@ export default async function ComparePairPage({ params }: Props) {
             <tbody>
               {pair.axes.map((axis, index) => (
                 <tr key={axis.label} className={index % 2 === 0 ? "bg-white" : "bg-slate-50/60"}>
-                  <th scope="row" className="p-4 text-xs font-semibold text-slate-500">
+                  <th
+                    scope="row"
+                    className={`sticky left-0 z-10 p-4 text-xs font-semibold text-slate-500 ${index % 2 === 0 ? "bg-white" : "bg-slate-50"}`}
+                  >
                     {axis.label}
                   </th>
                   <td className="p-4 text-slate-700">{axis.a}</td>

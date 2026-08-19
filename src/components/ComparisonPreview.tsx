@@ -24,7 +24,7 @@ export default function ComparisonPreview() {
           <table className="w-full min-w-[560px] border-collapse bg-white text-left text-sm">
             <thead>
               <tr>
-                <th scope="col" className="w-40 bg-white p-4 text-xs font-medium text-slate-400">
+                <th scope="col" className="sticky left-0 z-10 w-40 bg-white p-4 text-xs font-medium text-slate-400">
                   比較ポイント
                 </th>
                 {comparisonServices.map((service) => {
@@ -66,7 +66,7 @@ export default function ComparisonPreview() {
                 >
                   <th
                     scope="row"
-                    className="p-4 text-xs font-semibold text-slate-500"
+                    className={`sticky left-0 z-10 p-4 text-xs font-semibold text-slate-500 ${index % 2 === 0 ? "bg-white" : "bg-slate-50"}`}
                   >
                     {row.label}
                   </th>
