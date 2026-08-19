@@ -191,9 +191,23 @@ official-only CTA.
 
 Live: AptiPass English has its own GA4 property, `G-UEQ9L0P5NN`,
 separate from aptipass.com's. gtag.js is loaded directly in
-`src/app/layout.tsx` (`next/script`, `strategy="afterInteractive"`,
+`src/app/layout.tsx` (`next/script`, `strategy="beforeInteractive"`,
 Google's own base snippet — no GTM container, no `@next/third-parties`
 or other added dependency).
+
+**Use `beforeInteractive`, not the docs' default `afterInteractive`,
+for this script.** `afterInteractive` scripts are injected client-side
+only, after hydration — they never appear as a literal tag in the
+server-rendered HTML, so whether they ever run depends on hydration
+completing with no errors, and that isn't something you can confirm by
+reading HTML. This was diagnosed as the actual reason GA4 showed zero
+traffic in a real deployment despite the Measurement ID being present
+in the page source. `beforeInteractive` is injected directly from the
+server (via Next.js's `__next_s` bootstrap, independent of React
+hydration) — verify this is still true after any Next.js upgrade by
+checking that `self.__next_s.push([...googletagmanager...])` literally
+appears in a plain `curl` of the page, not just inside the RSC flight
+payload.
 
 `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set in `.env.production`
 (**intentionally committed** — a GA4 Measurement ID isn't a secret,

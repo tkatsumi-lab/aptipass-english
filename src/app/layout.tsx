@@ -13,6 +13,17 @@ import { buildWebSiteJsonLd } from "@/lib/seo";
 // runtime binding, and why committing that file is intentional (a GA4
 // Measurement ID isn't a secret). The `if (GA_MEASUREMENT_ID)` guard is
 // kept so the site still builds/runs correctly if it's ever unset.
+//
+// strategy="beforeInteractive" (not the docs' default "afterInteractive")
+// is deliberate: afterInteractive scripts are injected client-side only,
+// after hydration — they never appear as a literal <script> tag in the
+// server-rendered HTML at all. That makes real event delivery depend on
+// hydration completing with no errors, which isn't verifiable by
+// inspecting HTML and was traced as the actual cause of GA4 showing zero
+// traffic despite the Measurement ID being present in the page source.
+// beforeInteractive is injected directly into <head> from the server —
+// see https://nextjs.org/docs/app/api-reference/components/script — so
+// the tag loads independently of hydration succeeding.
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 const geistSans = Geist({
@@ -43,9 +54,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-              strategy="afterInteractive"
+              strategy="beforeInteractive"
             />
-            <Script id="ga-init" strategy="afterInteractive">
+            <Script id="ga-init" strategy="beforeInteractive">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){window.dataLayer.push(arguments);}
