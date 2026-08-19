@@ -189,7 +189,7 @@ official-only CTA.
 
 ## Analytics (GA4)
 
-Live: AptiPass English has its own GA4 property, `G-UEQ9L0P5NN`,
+Live: AptiPass English has its own GA4 property, `G-0EQ9L0P5NN`,
 separate from aptipass.com's. gtag.js is loaded directly in
 `src/app/layout.tsx` (`next/script`, `strategy="beforeInteractive"`,
 Google's own base snippet — no GTM container, no `@next/third-parties`
