@@ -9,7 +9,12 @@
 	],
 	"assets": {
 		"directory": ".open-next/assets",
-		"binding": "ASSETS"
+		"binding": "ASSETS",
+		// /admin/* must always go through the Worker (and its auth
+		// middleware) rather than being served directly as a static asset,
+		// even though the admin page is force-dynamic and won't normally
+		// produce a matching asset file. Defense in depth.
+		"run_worker_first": ["/admin/*"]
 	},
 	"services": [
 		{
