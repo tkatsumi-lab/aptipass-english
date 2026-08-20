@@ -103,19 +103,19 @@ export const affiliatePrograms: AffiliateProgram[] = [
     programId: "s00000014758001",
     programScope: "KIDS",
     affiliateCapabilityStatus: "AVAILABLE",
-    affiliateStatus: "APPROVED",
+    affiliateStatus: "ACTIVE",
     affiliateUrl: "https://px.a8.net/svt/ejp?a8mat=4BA759+EB00LE+35VG+6LWTE",
     trackingPixelUrl: null,
     linkText: null,
     sitePlacementUrls: [],
-    affiliateImplemented: false,
+    affiliateImplemented: true,
     adUrlSubmissionRequired: true,
     adUrlSubmitted: false,
     adUrlSubmittedAt: null,
-    prDisclosureReady: false,
+    prDisclosureReady: true,
     lastCheckedAt: "2026-08-19",
     notes:
-      "運営者から提供されたHuman Verified Fact。Program ID s00000014758001は一般向けNativeCamp（Service ID: nativecamp、programScope: GENERAL相当）と同一のA8プログラムだが、この行は「ネイティブキャンプキッズ」向けに承認された別クリエイティブ（Kids訴求）を指すため programScope: KIDS として区別している。一般向けクリエイティブのProgramはこのRegistryへ未登録（今回のPhaseで明示提供されたのはKids向けのみのため、推測で登録していない）。affiliateStatus: APPROVEDのためaffiliateImplemented: falseとし、CTA Resolverはこの行をまだ使用しない。adUrlSubmissionRequired: trueに伴い、掲載URL確定後にsitePlacementUrls・adUrlSubmittedを更新すること。",
+      "運営者から提供されたHuman Verified Fact。Program ID s00000014758001は一般向けNativeCamp（Service ID: nativecamp、programScope: GENERAL相当）と同一のA8プログラムだが、この行は「ネイティブキャンプキッズ」向けに承認された別クリエイティブ（Kids訴求）を指すため programScope: KIDS として区別している。一般向けクリエイティブのProgramはこのRegistryへ未登録（今回のPhaseで明示提供されたのはKids向けのみのため、推測で登録していない）。affiliateImplemented: trueとしCTA Resolver経由でサイトに実装済み。adUrlSubmissionRequired: trueのため、A8への掲載URL（https://english.aptipass.com/services/nativecamp）提出後、sitePlacementUrls・adUrlSubmitted・adUrlSubmittedAtを更新すること。",
   },
 ];
 
