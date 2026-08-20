@@ -38,6 +38,7 @@ export type AdminAffiliateRow = {
   adUrlSubmitted: boolean;
   adUrlSubmittedAt: string | null;
   prDisclosureReady: boolean;
+  priority: "HIGH" | "MEDIUM" | "LOW" | null;
   lastCheckedAt: string | null;
   notes: string;
 };
@@ -82,6 +83,7 @@ export function buildAdminAffiliateRows(): AdminAffiliateRow[] {
       adUrlSubmitted: program?.adUrlSubmitted ?? false,
       adUrlSubmittedAt: program?.adUrlSubmittedAt ?? null,
       prDisclosureReady: program?.prDisclosureReady ?? false,
+      priority: program?.priority ?? null,
       lastCheckedAt: program?.lastCheckedAt ?? null,
       notes: program?.notes ?? "",
     };
@@ -96,6 +98,8 @@ export type AdminAffiliateSummary = {
   adUrlPending: number; // adUrlSubmissionRequired && !adUrlSubmitted
   unavailable: number; // NOT_AVAILABLE + ENDED
   unresearched: number; // UNKNOWN + NOT_FOUND
+  available: number; // AVAILABLE — ready to apply to
+  availableHighPriority: number; // AVAILABLE && priority === "HIGH" — apply to these first
 };
 
 export function buildAdminAffiliateSummary(rows: AdminAffiliateRow[]): AdminAffiliateSummary {
@@ -107,5 +111,7 @@ export function buildAdminAffiliateSummary(rows: AdminAffiliateRow[]): AdminAffi
     adUrlPending: rows.filter((r) => r.adUrlSubmissionRequired === true && !r.adUrlSubmitted).length,
     unavailable: rows.filter((r) => r.displayStatus === "NOT_AVAILABLE" || r.displayStatus === "ENDED").length,
     unresearched: rows.filter((r) => r.displayStatus === "UNKNOWN" || r.displayStatus === "NOT_FOUND").length,
+    available: rows.filter((r) => r.displayStatus === "AVAILABLE").length,
+    availableHighPriority: rows.filter((r) => r.displayStatus === "AVAILABLE" && r.priority === "HIGH").length,
   };
 }

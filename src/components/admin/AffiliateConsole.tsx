@@ -6,6 +6,7 @@ import type { AdminAffiliateRow, AdminAffiliateSummary, DisplayStatus } from "@/
 type FilterId =
   | "all"
   | "done"
+  | "highPriority"
   | "available"
   | "applied"
   | "approved"
@@ -16,6 +17,7 @@ type FilterId =
 const FILTERS: { id: FilterId; label: string }[] = [
   { id: "all", label: "全件" },
   { id: "done", label: "対応済み" },
+  { id: "highPriority", label: "今すぐ申請候補（HIGH）" },
   { id: "available", label: "未対応（案件あり）" },
   { id: "applied", label: "申請中" },
   { id: "approved", label: "提携済み未実装" },
@@ -24,12 +26,16 @@ const FILTERS: { id: FilterId; label: string }[] = [
   { id: "unresearched", label: "未調査" },
 ];
 
+const PRIORITY_RANK: Record<"HIGH" | "MEDIUM" | "LOW", number> = { HIGH: 0, MEDIUM: 1, LOW: 2 };
+
 function matchesFilter(row: AdminAffiliateRow, filter: FilterId): boolean {
   switch (filter) {
     case "all":
       return true;
     case "done":
       return row.displayStatus === "ACTIVE" || row.displayStatus === "COMPLETE";
+    case "highPriority":
+      return row.displayStatus === "AVAILABLE" && row.priority === "HIGH";
     case "available":
       return row.displayStatus === "AVAILABLE" || row.displayStatus === "NOT_APPLIED";
     case "applied":
@@ -75,6 +81,23 @@ function StatusBadge({ row }: { row: AdminAffiliateRow }) {
   );
 }
 
+const PRIORITY_CLASSES: Record<"HIGH" | "MEDIUM" | "LOW", string> = {
+  HIGH: "bg-rose-100 text-rose-800 ring-rose-300",
+  MEDIUM: "bg-amber-100 text-amber-800 ring-amber-300",
+  LOW: "bg-slate-100 text-slate-600 ring-slate-300",
+};
+
+function PriorityBadge({ priority }: { priority: AdminAffiliateRow["priority"] }) {
+  if (!priority) return <span className="text-xs text-slate-300">—</span>;
+  return (
+    <span
+      className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ring-1 ${PRIORITY_CLASSES[priority]}`}
+    >
+      {priority}
+    </span>
+  );
+}
+
 function BoolBadge({ value, trueLabel, falseLabel }: { value: boolean; trueLabel: string; falseLabel: string }) {
   return (
     <span
@@ -108,14 +131,23 @@ export default function AffiliateConsole({ rows, summary, registryJson }: Affili
 
   const filteredRows = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return rows.filter((row) => {
-      if (!matchesFilter(row, filter)) return false;
-      if (asp !== "ALL" && row.asp !== asp) return false;
-      if (q && !row.serviceName.toLowerCase().includes(q) && !row.serviceId.toLowerCase().includes(q)) {
-        return false;
-      }
-      return true;
-    });
+    return rows
+      .filter((row) => {
+        if (!matchesFilter(row, filter)) return false;
+        if (asp !== "ALL" && row.asp !== asp) return false;
+        if (q && !row.serviceName.toLowerCase().includes(q) && !row.serviceId.toLowerCase().includes(q)) {
+          return false;
+        }
+        return true;
+      })
+      .sort((a, b) => {
+        // AVAILABLE rows surface HIGH-priority "apply next" candidates first;
+        // everything else keeps the registry's natural order (stable sort).
+        if (a.displayStatus !== "AVAILABLE" || b.displayStatus !== "AVAILABLE") return 0;
+        const rankA = a.priority ? PRIORITY_RANK[a.priority] : 99;
+        const rankB = b.priority ? PRIORITY_RANK[b.priority] : 99;
+        return rankA - rankB;
+      });
   }, [rows, filter, asp, query]);
 
   async function handleCopy() {
@@ -136,9 +168,11 @@ export default function AffiliateConsole({ rows, summary, registryJson }: Affili
       </p>
 
       {/* Summary */}
-      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-9">
         <SummaryCard label="全Service" value={summary.totalServices} />
         <SummaryCard label="対応済み" value={summary.done} color="green" />
+        <SummaryCard label="今すぐ申請候補（HIGH）" value={summary.availableHighPriority} color="red" />
+        <SummaryCard label="案件あり（未申請）" value={summary.available} color="yellow" />
         <SummaryCard label="申請中" value={summary.applied} color="yellow" />
         <SummaryCard label="提携済み未実装" value={summary.approvedNotImplemented} color="yellow" />
         <SummaryCard label="掲載URL未提出" value={summary.adUrlPending} color="yellow" />
@@ -229,6 +263,7 @@ export default function AffiliateConsole({ rows, summary, registryJson }: Affili
               <Th>ASP</Th>
               <Th>Program</Th>
               <Th>Status</Th>
+              <Th>優先度</Th>
               <Th>Affiliate URL</Th>
               <Th>Site実装</Th>
               <Th>掲載URL提出</Th>
@@ -255,6 +290,9 @@ export default function AffiliateConsole({ rows, summary, registryJson }: Affili
                 </Td>
                 <Td>
                   <StatusBadge row={row} />
+                </Td>
+                <Td>
+                  <PriorityBadge priority={row.priority} />
                 </Td>
                 <Td>
                   {row.affiliateUrl ? (
