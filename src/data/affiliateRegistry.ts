@@ -86,13 +86,13 @@ export const affiliatePrograms: AffiliateProgram[] = [
     linkText: "【QQキッズ】こども専用オンライン英会話",
     sitePlacementUrls: ["https://english.aptipass.com/services/qq-kids"],
     affiliateImplemented: true,
-    adUrlSubmissionRequired: null,
-    adUrlSubmitted: false,
-    adUrlSubmittedAt: null,
+    adUrlSubmissionRequired: true,
+    adUrlSubmitted: true,
+    adUrlSubmittedAt: "2026-08-20",
     prDisclosureReady: true,
     lastCheckedAt: "2026-08-20",
     notes:
-      "運営者からA8.netの公式広告素材（テキストリンク＋計測用1x1ピクセル）を提供された、Human Verified Fact。この programName の対象は「QQキッズ」（4歳〜中学生向けの子ども専門サービス、Service ID: qq-kids）のみであり、成人向け一般サービス「QQEnglish」（Service ID: qqenglish）には適用しない。両者はAptiPass English内でも別Serviceとして登録されている。advertiserName・programIdは未提供のため未確認のままにしている。adUrlSubmissionRequiredもA8側の要否が未確認のためnull。2026-08-20にaffiliateUrl/trackingPixelUrlをA8.netの新しい正式広告素材（a8mat=4BA8P9+YJ86I+4HHM+66H9E）へ差し替え。linkTextはA8指定文言のまま変更なし。旧素材（a8mat=4BA8P9+YJ7EQ+4HHM+66H9E）は使用終了。",
+      "運営者からA8.netの公式広告素材（テキストリンク＋計測用1x1ピクセル）を提供された、Human Verified Fact。この programName の対象は「QQキッズ」（4歳〜中学生向けの子ども専門サービス、Service ID: qq-kids）のみであり、成人向け一般サービス「QQEnglish」（Service ID: qqenglish）には適用しない。両者はAptiPass English内でも別Serviceとして登録されている。advertiserName・programIdは未提供のため未確認のままにしている。2026-08-20にaffiliateUrl/trackingPixelUrlをA8.netの新しい正式広告素材（a8mat=4BA8P9+YJ86I+4HHM+66H9E）へ差し替え。linkTextはA8指定文言のまま変更なし。旧素材（a8mat=4BA8P9+YJ7EQ+4HHM+66H9E）は使用終了。2026-08-20にA8への掲載URL（https://english.aptipass.com/services/qq-kids）提出完了。",
   },
   {
     id: "nativecamp-a8-general",
@@ -110,12 +110,12 @@ export const affiliatePrograms: AffiliateProgram[] = [
     sitePlacementUrls: ["https://english.aptipass.com/services/nativecamp"],
     affiliateImplemented: true,
     adUrlSubmissionRequired: true,
-    adUrlSubmitted: false,
-    adUrlSubmittedAt: null,
+    adUrlSubmitted: true,
+    adUrlSubmittedAt: "2026-08-20",
     prDisclosureReady: true,
     lastCheckedAt: "2026-08-20",
     notes:
-      "運営者から提供されたHuman Verified Fact。Program ID s00000014758001の一般向け（GENERAL）クリエイティブ。2026-08-20にA8.netの正式広告素材（a8mat=4BA759+EB01D6+35VG+64JTE、テキスト「月額6,480円でレッスンが24時間受け放題！」＋計測用1x1ピクセル）へ差し替え済み。以前このidは誤って programScope: KIDS のまま一般向け素材を保持していたため、今回 nativecamp-a8-general へ改名し、KIDS向けは別行（nativecamp-a8-kids）へ正しく分離した。affiliateImplemented: trueのままCTA Resolver経由で/services/nativecampに実装継続。adUrlSubmissionRequired: trueのため、A8への掲載URL（https://english.aptipass.com/services/nativecamp）提出後、adUrlSubmitted・adUrlSubmittedAtを更新すること。",
+      "運営者から提供されたHuman Verified Fact。Program ID s00000014758001の一般向け（GENERAL）クリエイティブ。2026-08-20にA8.netの正式広告素材（a8mat=4BA759+EB01D6+35VG+64JTE、テキスト「月額6,480円でレッスンが24時間受け放題！」＋計測用1x1ピクセル）へ差し替え済み。以前このidは誤って programScope: KIDS のまま一般向け素材を保持していたため、今回 nativecamp-a8-general へ改名し、KIDS向けは別行（nativecamp-a8-kids）へ正しく分離した。affiliateImplemented: trueのままCTA Resolver経由で/services/nativecampに実装継続。2026-08-20にA8への掲載URL（https://english.aptipass.com/services/nativecamp）提出完了。",
   },
   {
     id: "nativecamp-a8-kids",
