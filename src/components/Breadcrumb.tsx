@@ -30,7 +30,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
                   {item.name}
                 </span>
               ) : (
-                <Link href={item.path} className="hover:text-blue-600">
+                <Link href={item.path} prefetch={false} className="hover:text-blue-600">
                   {item.name}
                 </Link>
               )}

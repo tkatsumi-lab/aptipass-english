@@ -23,6 +23,7 @@ export default function ServiceCard({ service, compact = false }: ServiceCardPro
         </div>
         <Link
           href={`/services/${service.slug}`}
+          prefetch={false}
           className={`shrink-0 text-xs font-semibold ${primaryCategory.chipText} hover:opacity-80`}
         >
           詳細
@@ -63,6 +64,7 @@ export default function ServiceCard({ service, compact = false }: ServiceCardPro
 
       <Link
         href={`/services/${service.slug}`}
+        prefetch={false}
         className={`mt-auto inline-flex items-center gap-1 text-sm font-semibold ${primaryCategory.chipText} hover:opacity-80`}
       >
         詳しく見る

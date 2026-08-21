@@ -14,6 +14,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
+        prefetch={false}
         className="mt-8 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-105"
       >
         トップページへ戻る

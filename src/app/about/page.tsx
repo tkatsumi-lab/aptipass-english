@@ -34,6 +34,7 @@ export default function AboutPage() {
         <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Link
             href="/editorial-policy"
+            prefetch={false}
             className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
           >
             <p className="text-sm font-semibold text-slate-900">編集方針・掲載基準</p>
@@ -43,6 +44,7 @@ export default function AboutPage() {
           </Link>
           <Link
             href="/advertising-policy"
+            prefetch={false}
             className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
           >
             <p className="text-sm font-semibold text-slate-900">広告・Affiliateについて</p>
@@ -52,6 +54,7 @@ export default function AboutPage() {
           </Link>
           <Link
             href="/privacy"
+            prefetch={false}
             className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
           >
             <p className="text-sm font-semibold text-slate-900">プライバシーポリシー</p>
@@ -61,6 +64,7 @@ export default function AboutPage() {
           </Link>
           <Link
             href="/contact"
+            prefetch={false}
             className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
           >
             <p className="text-sm font-semibold text-slate-900">お問い合わせ</p>

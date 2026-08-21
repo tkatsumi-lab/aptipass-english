@@ -23,6 +23,7 @@ export default function FeaturedServices() {
       <div className="mt-8 text-center">
         <Link
           href="/services"
+          prefetch={false}
           className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700"
         >
           サービス一覧をすべて見る

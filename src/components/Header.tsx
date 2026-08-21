@@ -18,6 +18,7 @@ export default function Header() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link
           href="/"
+          prefetch={false}
           className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-lg font-extrabold tracking-tight text-transparent"
         >
           AptiPass English
@@ -31,6 +32,7 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
+              prefetch={false}
               className="text-sm font-medium text-slate-600 transition-colors hover:text-blue-600"
             >
               {item.label}
@@ -40,6 +42,7 @@ export default function Header() {
 
         <Link
           href="/#purpose"
+          prefetch={false}
           className="hidden rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-5 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-105 md:inline-block"
         >
           自分に合うサービスを探す
@@ -91,6 +94,7 @@ export default function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  prefetch={false}
                   className="block rounded-lg px-3 py-3 text-base font-medium text-slate-700 hover:bg-slate-50"
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -101,6 +105,7 @@ export default function Header() {
             <li className="pt-2">
               <Link
                 href="/#purpose"
+                prefetch={false}
                 className="block rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-3 text-center text-base font-semibold text-white"
                 onClick={() => setIsMenuOpen(false)}
               >

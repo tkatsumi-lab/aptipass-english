@@ -43,6 +43,7 @@ export default function ComparePage() {
               <li key={pair.slug}>
                 <Link
                   href={`/compare/${pair.slug}`}
+                  prefetch={false}
                   className="flex h-full flex-col gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
                 >
                   <div className="flex items-center gap-3">

@@ -18,6 +18,7 @@ export default function CategoryGrid() {
           <li key={category.id}>
             <Link
               href={`/categories/${category.slug}`}
+              prefetch={false}
               className="group flex h-full flex-col gap-3 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md sm:p-5"
             >
               <span

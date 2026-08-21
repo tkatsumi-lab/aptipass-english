@@ -15,7 +15,7 @@ export default function CategoryBadge({
 
   if (linked) {
     return (
-      <Link href={`/categories/${category.slug}`} className={`${className} hover:brightness-95`}>
+      <Link href={`/categories/${category.slug}`} prefetch={false} className={`${className} hover:brightness-95`}>
         {category.name}
       </Link>
     );

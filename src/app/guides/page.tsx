@@ -38,6 +38,7 @@ export default function GuidesPage() {
             <li key={guide.id}>
               <Link
                 href={`/guides/${guide.slug}`}
+                prefetch={false}
                 className="flex h-full items-start gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
               >
                 <span

@@ -126,6 +126,7 @@ export default async function GoalPage({ params }: Props) {
                 <li key={pair.slug}>
                   <Link
                     href={`/compare/${pair.slug}`}
+                    prefetch={false}
                     className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700"
                   >
                     {pair.slug.replace("-vs-", " vs ")}
@@ -145,6 +146,7 @@ export default async function GoalPage({ params }: Props) {
                 <li key={guide.id}>
                   <Link
                     href={`/guides/${guide.slug}`}
+                    prefetch={false}
                     className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700"
                   >
                     {guide.emoji} {guide.title}

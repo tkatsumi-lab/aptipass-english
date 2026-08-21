@@ -81,6 +81,7 @@ export default async function GuideDetailPage({ params }: Props) {
                 <li key={`${link.type}-${link.slug}`}>
                   <Link
                     href={`${relatedLinkPathPrefix[link.type]}/${link.slug}`}
+                    prefetch={false}
                     className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1.5 text-xs font-medium text-slate-700 ring-1 ring-slate-200 hover:bg-slate-100"
                   >
                     {link.label}

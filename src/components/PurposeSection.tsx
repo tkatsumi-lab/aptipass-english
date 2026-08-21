@@ -23,6 +23,7 @@ export default function PurposeSection() {
               <li key={goal.id} className="min-w-[240px] snap-start sm:min-w-0">
                 <Link
                   href={`/goals/${goal.slug}`}
+                  prefetch={false}
                   className="flex h-full flex-col justify-between gap-4 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-100 transition-all hover:-translate-y-1 hover:shadow-md"
                 >
                   <span className="text-2xl" aria-hidden="true">

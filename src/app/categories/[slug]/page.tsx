@@ -124,6 +124,7 @@ export default async function CategoryPage({ params }: Props) {
                 <li key={goal.id}>
                   <Link
                     href={`/goals/${goal.slug}`}
+                    prefetch={false}
                     className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-200"
                   >
                     {goal.emoji} {goal.label}
@@ -142,6 +143,7 @@ export default async function CategoryPage({ params }: Props) {
                 <li key={pair.slug}>
                   <Link
                     href={`/compare/${pair.slug}`}
+                    prefetch={false}
                     className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700"
                   >
                     {pair.slug.replace("-vs-", " vs ")}
@@ -161,6 +163,7 @@ export default async function CategoryPage({ params }: Props) {
                 <li key={guide.id}>
                   <Link
                     href={`/guides/${guide.slug}`}
+                    prefetch={false}
                     className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700"
                   >
                     {guide.emoji} {guide.title}

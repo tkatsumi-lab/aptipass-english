@@ -42,6 +42,7 @@ export default function ComparisonPreview() {
                     >
                       <Link
                         href={serviceData ? `/services/${serviceData.slug}` : "#"}
+                        prefetch={false}
                         className="flex items-center gap-2 hover:opacity-90"
                       >
                         {serviceData && (
@@ -87,6 +88,7 @@ export default function ComparisonPreview() {
           </p>
           <Link
             href="/compare"
+            prefetch={false}
             className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700"
           >
             すべての比較を見る

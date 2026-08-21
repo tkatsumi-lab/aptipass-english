@@ -189,6 +189,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <li key={related.id}>
                   <Link
                     href={`/services/${related.slug}`}
+                    prefetch={false}
                     className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
                   >
                     <ServiceAvatar
@@ -219,6 +220,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <li key={pair.slug}>
                   <Link
                     href={`/compare/${pair.slug}`}
+                    prefetch={false}
                     className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700"
                   >
                     {pair.slug.replace("-vs-", " vs ")}
@@ -238,6 +240,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <li key={goal.id}>
                   <Link
                     href={`/goals/${goal.slug}`}
+                    prefetch={false}
                     className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-200"
                   >
                     {goal.emoji} {goal.label}
