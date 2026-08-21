@@ -371,6 +371,163 @@ export const columns: Column[] = [
     relatedCategorySlug: "online-eikaiwa",
     relatedCategoryLabel: "オンライン英会話",
   },
+  {
+    id: "why-is-i-capitalized",
+    slug: "why-is-i-capitalized",
+    series: "英語のなぜ？",
+    issueNumber: 1,
+    readingTimeMinutes: 4,
+    title: "なぜ英語の「I」だけ、いつも大文字なの？",
+    subtitle: "youも、heも、sheも小文字。なのに、なぜ「私」だけ大文字なのでしょう？",
+    emoji: "🔠",
+    // Same publish day as issue #1's yoroshiku article; a time component
+    // (rather than a bare date) breaks the publishedAt tie so this newer
+    // issue correctly sorts as LATEST ISSUE via columnsSortedByDate.
+    publishedAt: "2026-08-21T18:00:00+09:00",
+    seoTitle: "英語の「I」はなぜ大文字？youやheと違う理由をわかりやすく解説",
+    seoDescription:
+      "英語ではyouやhe、sheは小文字なのに、なぜ「私」を表すIだけ大文字なのでしょう？古英語からの変化や、一文字になったIが大文字で定着した理由を、英語の歴史と一緒にわかりやすく解説します。",
+    teaser: "youもheもsheも小文字なのに、なぜ「I」だけ大文字なのか。理由を知ると、英語の見え方が少し変わります。",
+    body: [
+      { type: "paragraph", text: "英語の文章を見ていて、ちょっと不思議に思ったことはありませんか？" },
+      { type: "paragraph", text: "you は小文字。" },
+      { type: "paragraph", text: "he も小文字。" },
+      { type: "paragraph", text: "she も小文字。" },
+      { type: "paragraph", text: "ところが、自分のことを表す I だけは――" },
+      { type: "paragraph", text: "なぜか、いつでも大文字です。" },
+
+      { type: "question", text: "どうして「私」だけ、特別扱いなんでしょう？" },
+
+      { type: "paragraph", text: "たとえば、" },
+      { type: "example", en: "I like coffee.", ja: "私はコーヒーが好きです。" },
+      { type: "paragraph", text: "文の最初だから大文字なのではありません。" },
+      { type: "example", en: "My sister and I like coffee.", ja: "姉（妹）と私はコーヒーが好きです。" },
+      { type: "paragraph", text: "文の途中に来ても、やっぱり I。" },
+      { type: "paragraph", text: "小文字の i にはなりません。" },
+      { type: "paragraph", text: "人の名前なら大文字になるのは分かります。" },
+      { type: "paragraph", text: "Tokyo、Japan、John。" },
+      { type: "paragraph", text: "でも I は名前ではなく、ただの代名詞です。" },
+      { type: "paragraph", text: "それなのに、" },
+      { type: "paragraph", text: "you は小文字で、" },
+      { type: "paragraph", text: "he も she も小文字。" },
+      { type: "paragraph", text: "なぜ I だけなのでしょう？" },
+
+      {
+        type: "keyMessage",
+        text: "YOU は小文字。\nHE も小文字。\nSHE も小文字。\n\nなのに、\n\nI だけ大文字。",
+      },
+
+      { type: "heading", text: "昔から「I」だったわけではありません" },
+      { type: "paragraph", text: "実は英語の「私」は、最初から I だったわけではありません。" },
+      {
+        type: "paragraph",
+        text: "英語の祖先にあたる古英語では、「私」にあたる言葉として ic という形が使われていました。",
+      },
+      { type: "paragraph", text: "今の I より、ちゃんと言葉らしい形をしていますよね。" },
+      { type: "paragraph", text: "ところが英語が長い年月をかけて変化していく中で、発音や綴りも変わっていきます。" },
+      { type: "paragraph", text: "ic も次第に短くなり、やがて一文字の形へ近づいていきました。" },
+
+      { type: "englishDisplay", en: "I", context: "たった一文字になった「私」" },
+
+      { type: "paragraph", text: "ここで、ちょっと困ったことが起こります。" },
+      {
+        type: "paragraph",
+        text: "一文字だけの小文字 i は、昔の手書きの文章ではとても目立ちにくかったのです。",
+      },
+      { type: "paragraph", text: "前後にたくさんの文字が並んでいると、小さな一本の線のように見えてしまいます。" },
+      {
+        type: "paragraph",
+        text: "そこで、読みやすくするために I と大文字で書く習慣が広がっていった、と考えられています。",
+      },
+
+      {
+        type: "insight",
+        text: "I が大文字なのは、「私が一番偉いから」ではありません。一文字になってしまった「私」を、文章の中で読みやすくする必要があった――という歴史が関係しています。",
+      },
+
+      { type: "heading", text: "では、なぜ「a」は小文字なの？" },
+      { type: "paragraph", text: "ここまで読むと、こんな疑問も出てきませんか？" },
+      { type: "question", text: "一文字だから大文字なら、「a」はどうして小文字なの？" },
+      { type: "paragraph", text: "いいところに気づきました。" },
+      { type: "paragraph", text: "英語には I 以外にも、一文字だけで使われる言葉があります。" },
+      { type: "paragraph", text: "たとえば、" },
+      { type: "example", en: "I have a dog.", ja: "私は犬を飼っています。" },
+      { type: "paragraph", text: "a も一文字ですよね。" },
+      { type: "paragraph", text: "それでも A とは書きません。" },
+      { type: "paragraph", text: "つまり、" },
+      { type: "paragraph", text: "「一文字の単語はすべて大文字にする」" },
+      { type: "paragraph", text: "という英語のルールがあるわけではありません。" },
+      {
+        type: "paragraph",
+        text: "I の大文字化は、英語の歴史の中で生まれ、そのまま現代まで残った特殊な習慣なのです。",
+      },
+
+      {
+        type: "keyMessage",
+        text: "英語のルールには、\n\n誰かが最初から\nきれいに設計したものばかりが\nあるわけではありません。\n\n歴史の中で、そうなった。\n\nそんなルールもあります。",
+      },
+
+      { type: "heading", text: "英語は「完成品」ではない" },
+      { type: "paragraph", text: "学校で英語を勉強していると、" },
+      { type: "paragraph", text: "「これはこういうルールだから覚えましょう」" },
+      { type: "paragraph", text: "と言われることが多いですよね。" },
+      { type: "paragraph", text: "三単現のs。" },
+      { type: "paragraph", text: "不規則動詞。" },
+      { type: "paragraph", text: "冠詞のaとthe。" },
+      { type: "paragraph", text: "そして、大文字の I。" },
+      {
+        type: "paragraph",
+        text: "すると英語というものが、最初から誰かによってきっちり設計された巨大なルールブックのように感じられるかもしれません。",
+      },
+      { type: "paragraph", text: "でも、言葉はそんなふうにはできていません。" },
+      { type: "paragraph", text: "人が何百年、何千年と使っているうちに、" },
+      { type: "paragraph", text: "発音が変わったり、" },
+      { type: "paragraph", text: "綴りが変わったり、" },
+      { type: "paragraph", text: "便利な言い方が残ったり、" },
+      { type: "paragraph", text: "昔の習慣だけが残ったりする。" },
+      { type: "paragraph", text: "英語も、そうやって今の姿になりました。" },
+
+      {
+        type: "keyMessage",
+        text: "英語には、\n\n「なぜそうなるの？」\n\nと聞いてみると、\n\n文法ではなく\n歴史が答えてくれることがあります。",
+      },
+
+      { type: "paragraph", text: "そう考えると、英語のルールを見る目が少し変わりませんか？" },
+      { type: "paragraph", text: "「また変なルールを覚えなきゃ」" },
+      { type: "paragraph", text: "ではなく、" },
+      { type: "paragraph", text: "「なんでこんな形になったんだろう？」" },
+      { type: "paragraph", text: "と考えてみる。" },
+      {
+        type: "paragraph",
+        text: "すると、暗記していた英語が、少しだけ「人間が使ってきた言葉」に見えてきます。",
+      },
+
+      { type: "heading", text: "今日から「I」を見たら" },
+      { type: "paragraph", text: "明日、英語の文章で I を見かけたら、ほんの一瞬だけ思い出してみてください。" },
+      { type: "paragraph", text: "you でもなく、" },
+      { type: "paragraph", text: "he でもなく、" },
+      { type: "paragraph", text: "she でもなく、" },
+      { type: "paragraph", text: "なぜか一人だけ大文字で立っている I。" },
+
+      { type: "englishDisplay", en: "I", context: "英語の長い歴史が残した、一文字。" },
+
+      { type: "paragraph", text: "たった一文字ですが、その形になるまでには長い時間が流れています。" },
+      { type: "paragraph", text: "普段なら何も考えずに読み飛ばしてしまう一文字にも、ちゃんと物語があるんですね。" },
+
+      {
+        type: "insight",
+        text: "英語の「なぜ？」を知ることは、ルールをもう一つ覚えることではありません。英語を見る角度を、ひとつ増やすこと。",
+      },
+    ],
+    editorNote: [
+      "英語を勉強していると、「そういうものだから」と覚えてしまうことがたくさんあります。",
+      "でも、ときどき立ち止まって、「ところで、なんで？」と聞いてみると、英語は急に面白くなります。",
+      "AptiPass MAGAZINE「英語のなぜ？」では、そんな素朴な疑問を一つずつ拾っていきます。",
+      "次に英語を見たとき、今まで気にもしなかったところが少し気になってしまう。そんな連載にしていけたらと思っています。",
+    ],
+    relatedCategorySlug: "online-eikaiwa",
+    relatedCategoryLabel: "オンライン英会話",
+  },
 ];
 
 export function getColumnBySlug(slug: string): Column | undefined {
@@ -402,5 +559,9 @@ export const columnsSortedByDate: Column[] = [...columns].sort(
 export const seriesInfo: Record<string, { description: string }> = {
   英語コラム: {
     description: "日常のふとした「あれ、英語で何て言うんだっけ？」から出発して、英語と日本語の面白い違いを読み解く。",
+  },
+  "英語のなぜ？": {
+    description:
+      "英語の素朴な疑問を、「え、そうなの？」→「なんで？」→「なるほど！」という流れで解き明かす、テンポよく読める連載。",
   },
 };
