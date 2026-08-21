@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { columns } from "@/data/columns";
 import { comparePairs } from "@/data/comparePairs";
 import { guides } from "@/data/guides";
 import { services } from "@/data/services";
@@ -13,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/services",
     "/compare",
     "/guides",
+    "/columns",
     "/about",
     "/editorial-policy",
     "/advertising-policy",
@@ -26,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...getIndexableGoals().map((g) => `/goals/${g.slug}`),
     ...comparePairs.map((c) => `/compare/${c.slug}`),
     ...guides.map((g) => `/guides/${g.slug}`),
+    ...columns.map((c) => `/columns/${c.slug}`),
   ];
 
   return [...staticPaths, ...dynamicPaths].map((path) => ({

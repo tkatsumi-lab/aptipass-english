@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import CategoryGrid from "@/components/CategoryGrid";
+import ColumnCards from "@/components/ColumnCards";
 import ComparisonPreview from "@/components/ComparisonPreview";
 import DecisionCTA from "@/components/DecisionCTA";
 import FeaturedServices from "@/components/FeaturedServices";
@@ -25,6 +26,7 @@ export default function Home() {
       <ComparisonPreview />
       <DecisionCTA />
       <GuideCards />
+      <ColumnCards />
     </>
   );
 }
