@@ -54,21 +54,34 @@ export default async function ColumnDetailPage({ params }: Props) {
 
       {/* Magazine cover — a distinct "paper" band for the issue's masthead + title,
           the same "give this section its own background" device DecisionCTA already
-          uses elsewhere on the site, just tuned quiet/warm instead of dark/bold. */}
+          uses elsewhere on the site, just tuned quiet/warm instead of dark/bold.
+          The masthead block (name / descriptor / rule / issue meta) is a constant
+          brand element identical on every issue — it isn't specific to this
+          article, so it stays hardcoded here the same way "AptiPass MAGAZINE"
+          already was. */}
       <div className="bg-gradient-to-b from-indigo-50/70 via-white to-white">
         <div className="mx-auto max-w-2xl px-4 pt-12 pb-6 sm:px-6 sm:pt-16">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-semibold tracking-[0.18em] text-indigo-500 uppercase">
-            <span>AptiPass MAGAZINE</span>
-            <span aria-hidden="true" className="text-indigo-200">
+          <p className="text-sm font-bold tracking-[0.28em] text-indigo-950 uppercase sm:text-base">
+            AptiPass MAGAZINE
+          </p>
+          <p className="mt-1 text-[10px] font-medium tracking-[0.35em] text-indigo-400 uppercase sm:text-[11px]">
+            Language &amp; Culture
+          </p>
+
+          <div aria-hidden="true" className="mt-5 h-px w-12 bg-indigo-200" />
+
+          <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-semibold tracking-[0.15em] text-slate-400 uppercase">
+            <span>ISSUE {formatIssueNumber(column.issueNumber)}</span>
+            <span aria-hidden="true" className="text-slate-300">
               /
             </span>
-            <span>{column.series}</span>
-          </div>
-          <div className="mt-3 flex items-center gap-2 text-xs text-slate-400">
-            <span>ISSUE {formatIssueNumber(column.issueNumber)}</span>
-            <span aria-hidden="true">・</span>
             <span>{column.readingTimeMinutes} MIN READ</span>
+            <span aria-hidden="true" className="text-slate-300">
+              /
+            </span>
+            <span className="text-indigo-500">{column.series}</span>
           </div>
+
           <h1 className="mt-6 text-balance break-keep font-serif text-3xl leading-[1.3] font-bold tracking-tight text-slate-900 sm:text-5xl sm:leading-[1.25]">
             {column.title}
           </h1>

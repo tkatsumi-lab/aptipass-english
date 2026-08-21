@@ -90,16 +90,21 @@ export default function ColumnBody({ blocks }: ColumnBodyProps) {
 
           case "englishDisplay":
             return (
-              <div key={index} className="my-12 text-center sm:my-16">
+              <div key={index} className="my-14 text-center sm:my-20">
+                <div aria-hidden="true" className="mx-auto h-px w-8 bg-indigo-200" />
                 {block.context && (
-                  <p className="text-[11px] font-semibold tracking-[0.2em] text-indigo-400 uppercase">
+                  <p className="mt-4 text-[11px] font-semibold tracking-[0.2em] text-indigo-400 uppercase">
                     {block.context}
                   </p>
                 )}
-                <p className="mx-auto mt-3 max-w-lg text-balance font-serif text-2xl leading-snug font-semibold whitespace-pre-line text-slate-900 sm:text-4xl sm:leading-snug">
+                <p
+                  className={`mx-auto max-w-lg text-balance break-keep font-serif text-[28px] leading-[1.35] font-bold tracking-tight whitespace-pre-line text-slate-900 sm:text-5xl sm:leading-[1.3] ${
+                    block.context ? "mt-3" : "mt-5"
+                  }`}
+                >
                   {block.en}
                 </p>
-                {block.ja && <p className="mt-3 text-sm text-slate-400 sm:text-base">{block.ja}</p>}
+                {block.ja && <p className="mt-4 text-xs text-slate-400 sm:text-sm">{block.ja}</p>}
               </div>
             );
 
