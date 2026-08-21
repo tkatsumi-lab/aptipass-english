@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import ColumnBody from "@/components/ColumnBody";
+import ColumnHero from "@/components/ColumnHero";
 import JsonLd from "@/components/JsonLd";
-import { columns, formatIssueNumber, getColumnBySlug } from "@/data/columns";
+import { columns, getColumnBySlug, seriesInfo } from "@/data/columns";
+import { SERIES_ACCENTS } from "@/lib/seriesAccent";
 import { buildArticleJsonLd, buildMetadata } from "@/lib/seo";
 
 export const dynamicParams = false;
@@ -34,8 +37,14 @@ export default async function ColumnDetailPage({ params }: Props) {
   const column = getColumnBySlug(slug);
   if (!column) notFound();
 
+  const presentation = seriesInfo[column.series];
+  const a = SERIES_ACCENTS[presentation.accent];
+
+  // /columns is AptiPass MAGAZINE's Editorial Hub over 3 independent
+  // series, not a "英語コラム list" — so every article's breadcrumb trail
+  // points at the Hub under the brand name, not one series' name.
   const breadcrumbItems = [
-    { name: "英語コラム", path: "/columns" },
+    { name: "AptiPass MAGAZINE", path: "/columns" },
     { name: column.title, path: `/columns/${column.slug}` },
   ];
 
@@ -52,47 +61,25 @@ export default async function ColumnDetailPage({ params }: Props) {
         })}
       />
 
-      {/* Magazine cover — a distinct "paper" band for the issue's masthead + title,
-          the same "give this section its own background" device DecisionCTA already
-          uses elsewhere on the site, just tuned quiet/warm instead of dark/bold.
-          The masthead block (name / descriptor / rule / issue meta) is a constant
-          brand element identical on every issue — it isn't specific to this
-          article, so it stays hardcoded here the same way "AptiPass MAGAZINE"
-          already was. */}
-      <div className="bg-gradient-to-b from-indigo-50/70 via-white to-white">
-        <div className="mx-auto max-w-2xl px-4 pt-12 pb-6 sm:px-6 sm:pt-16">
-          <p className="text-sm font-bold tracking-[0.28em] text-indigo-950 uppercase sm:text-base">
-            AptiPass MAGAZINE
-          </p>
-          <p className="mt-1 text-[10px] font-medium tracking-[0.35em] text-indigo-400 uppercase sm:text-[11px]">
-            Language &amp; Culture
-          </p>
-
-          <div aria-hidden="true" className="mt-5 h-px w-12 bg-indigo-200" />
-
-          <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-semibold tracking-[0.15em] text-slate-400 uppercase">
-            <span>ISSUE {formatIssueNumber(column.issueNumber)}</span>
-            <span aria-hidden="true" className="text-slate-300">
-              /
-            </span>
-            <span>{column.readingTimeMinutes} MIN READ</span>
-            <span aria-hidden="true" className="text-slate-300">
-              /
-            </span>
-            <span className="text-indigo-500">{column.series}</span>
-          </div>
-
-          <h1 className="mt-6 text-balance break-keep font-serif text-3xl leading-[1.3] font-bold tracking-tight text-slate-900 sm:text-5xl sm:leading-[1.25]">
-            {column.title}
-          </h1>
-          <p className="mt-5 max-w-xl text-sm leading-relaxed text-slate-500 sm:text-base">
-            {column.subtitle}
-          </p>
-        </div>
-      </div>
+      <ColumnHero column={column} />
 
       <article className="mx-auto max-w-2xl px-4 pb-10 sm:px-6">
-        <ColumnBody blocks={column.body} />
+        <ColumnBody blocks={column.body} accent={presentation.accent} density={presentation.density} />
+
+        {column.illustration?.placement === "inline" && (
+          <div className="mt-10">
+            <Image
+              src={column.illustration.src}
+              alt={column.illustration.alt}
+              width={column.illustration.width}
+              height={column.illustration.height}
+              className="h-auto w-full max-w-sm"
+            />
+            {column.illustration.caption && (
+              <p className="mt-2 text-xs text-slate-400">{column.illustration.caption}</p>
+            )}
+          </div>
+        )}
 
         {/* Editor's closing note — a quiet postscript, not another boxed card. */}
         <div className="mt-16 border-t border-slate-100 pt-8">
@@ -112,7 +99,7 @@ export default async function ColumnDetailPage({ params }: Props) {
           <Link
             href={`/categories/${column.relatedCategorySlug}`}
             prefetch={false}
-            className="font-semibold text-indigo-600 hover:text-indigo-700"
+            className={`font-semibold ${a.link} ${a.linkHoverSelf}`}
           >
             {column.relatedCategoryLabel}を見てみる
             <span aria-hidden="true">→</span>

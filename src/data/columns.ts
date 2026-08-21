@@ -14,6 +14,8 @@
  * the page/route code is column-count-specific.
  */
 
+import type { SeriesAccent } from "@/lib/seriesAccent";
+
 export type ColumnBlock =
   /** Section break within the article — a magazine-style divider, not just a bold subheading. */
   | { type: "heading"; text: string }
@@ -44,17 +46,38 @@ export type ColumnBlock =
   | { type: "englishDisplay"; en: string; ja?: string; context?: string };
 
 /**
+ * A small Editorial Illustration — line art / simple graphics that support
+ * an article's theme, not stock-photo eye-candy. `src` must be a static
+ * asset under public/ (no external image hosts, so nothing new to fetch at
+ * request time); `width`/`height` are required so `next/image` can reserve
+ * layout space and avoid CLS before the image loads. Optional on `Column`:
+ * no article uses one yet, and the whole Magazine system — Hero, ColumnBody,
+ * /columns, the homepage section — must render correctly with it entirely
+ * absent.
+ */
+export type ColumnIllustration = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  /** Where it renders: the article cover (default) or inline within the body's top. */
+  placement?: "hero" | "inline";
+  caption?: string;
+};
+
+/**
  * `series`/`issueNumber`/`readingTimeMinutes` exist so a future editor
  * (ChatGPT drafts, Claude Code implements) only ever adds a new `Column`
- * object here — the Magazine cover/Hero, the /columns back-issue list, and
- * the homepage section all read these fields and update themselves. None
- * of that UI code branches on which article it's rendering.
+ * object here — the Magazine cover/Hero, the /columns Hub, and the
+ * homepage section all read these fields and update themselves. None of
+ * that UI code branches on which article it's rendering — only on which
+ * `series` it belongs to, via `seriesInfo` below.
  */
 export type Column = {
   id: string;
   /** URL slug under /columns/[slug] */
   slug: string;
-  /** e.g. "英語コラム" now; "英語のなぜ？" / "1分英語" are future series using the same Column shape. */
+  /** One of seriesInfo's keys — 英語コラム / 英語のなぜ？ / 1分英語. */
   series: string;
   /** "ISSUE 001" — per-series issue number, not a global article count. */
   issueNumber: number;
@@ -62,11 +85,11 @@ export type Column = {
   title: string;
   subtitle: string;
   emoji: string;
-  /** ISO date this column was published — used for JSON-LD datePublished/dateModified. */
+  /** ISO date (or datetime, to break same-day ties) this column was published — used for JSON-LD datePublished/dateModified and for ordering back issues within its series. */
   publishedAt: string;
   seoTitle: string;
   seoDescription: string;
-  /** One-line teaser used on card previews (/columns list, homepage). */
+  /** One-line teaser used on card previews (/columns Hub, homepage). */
   teaser: string;
   body: ColumnBlock[];
   /** Closing "AptiPass English 編集部より" note — kept separate from `body` so it always renders as its own distinct block, regardless of how `body` grows. */
@@ -74,6 +97,8 @@ export type Column = {
   /** Soft, non-affiliate internal link shown after the editor's note. */
   relatedCategorySlug: string;
   relatedCategoryLabel: string;
+  /** Optional — see ColumnIllustration. Omitted by every article today. */
+  illustration?: ColumnIllustration;
 };
 
 export const columns: Column[] = [
@@ -633,31 +658,69 @@ export function formatIssueNumber(issueNumber: number): string {
 }
 
 /**
- * Newest-first across all series combined — the single ordering the
- * Magazine Issue System is built on. /columns and the homepage section both
- * read this instead of raw `columns`, so "latest issue" vs. "back issues"
- * stays correct as more series are interleaved, with no per-page logic to
- * update when a second or third series starts publishing.
+ * All columns in one series, newest first. AptiPass MAGAZINE is an
+ * Editorial Hub over 3 *independent* series (see docs/architecture.md-style
+ * reasoning: each series has its own ISSUE 001, 002, ... — they are never
+ * interleaved into one cross-series "latest/back issues" list). /columns
+ * and the homepage section both call this once per series instead of
+ * sorting `columns` as a whole.
  */
-export const columnsSortedByDate: Column[] = [...columns].sort(
-  (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
-);
+export function getColumnsBySeries(series: string): Column[] {
+  return columns
+    .filter((c) => c.series === series)
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+}
 
 /**
- * Short identity for each series — enough to tell "the same magazine's
- * different serialization" apart without a per-series color scheme. Add an
- * entry here when 英語のなぜ？ / 1分英語 start publishing; no UI code needs
- * to change.
+ * Per-series presentation config — the "70% shared / 30% series-specific"
+ * lever the whole Magazine system reads from. Everything UI code needs to
+ * tell 英語コラム / 英語のなぜ？ / 1分英語 apart lives here, keyed by
+ * `series`; nothing branches on an article's slug or title. Adding a 4th
+ * series means adding one entry here (plus a presentation branch in
+ * ColumnHero, the one place that still needs series-specific JSX) — every
+ * article already in that series picks it up automatically.
  */
-export const seriesInfo: Record<string, { description: string }> = {
+export type SeriesPresentation = {
+  /** Hero masthead's second line, under "AptiPass MAGAZINE" — replaces the old one-size-fits-all "Language & Culture". */
+  mastheadDescriptor: string;
+  /** Short hook shown wherever this series is introduced (Hub, homepage). */
+  tagline: string;
+  /** One-line description of the reading experience. */
+  description: string;
+  /** Brand-safe accent token — see src/lib/seriesAccent.ts. */
+  accent: SeriesAccent;
+  /** CTA microcopy at Hub/homepage entry points, e.g. "英語コラムを読む". */
+  ctaLabel: string;
+  /** ColumnBody's whitespace rhythm for this series — see ColumnBody's `density` prop. */
+  density: "spacious" | "compact";
+};
+
+export const seriesInfo: Record<string, SeriesPresentation> = {
   英語コラム: {
-    description: "日常のふとした「あれ、英語で何て言うんだっけ？」から出発して、英語と日本語の面白い違いを読み解く。",
+    mastheadDescriptor: "Language & Culture",
+    tagline: "じっくり読む。",
+    description: "英語と言葉について、少し深く考えてみる読み物。",
+    accent: "indigo",
+    ctaLabel: "英語コラムを読む",
+    density: "spacious",
   },
   "英語のなぜ？": {
-    description:
-      "英語の素朴な疑問を、「え、そうなの？」→「なんで？」→「なるほど！」という流れで解き明かす、テンポよく読める連載。",
+    mastheadDescriptor: "Why? Discovery.",
+    tagline: "知ると面白い。",
+    description: "知っているようで知らない、英語の素朴な「なぜ？」。",
+    accent: "amber",
+    ctaLabel: "「なぜ？」を読む",
+    density: "spacious",
   },
   "1分英語": {
-    description: "1回につき、英語を1つだけ覚えて帰る。1分で読み切れる、いちばん短い連載。",
+    mastheadDescriptor: "One Minute, One English.",
+    tagline: "ひとつ覚える。",
+    description: "1分だけ。英語をひとつ持って帰る。",
+    accent: "emerald",
+    ctaLabel: "1分だけ読む",
+    density: "compact",
   },
 };
+
+/** Display order for series-listing UI (Hub, homepage) — Object key order is insertion order for string keys, so this is just `seriesInfo`'s own key order made explicit. */
+export const SERIES_NAMES: string[] = Object.keys(seriesInfo);

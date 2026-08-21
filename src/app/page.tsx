@@ -22,11 +22,11 @@ export default function Home() {
       <Hero />
       <CategoryGrid />
       <PurposeSection />
+      <ColumnCards />
       <FeaturedServices />
       <ComparisonPreview />
       <DecisionCTA />
       <GuideCards />
-      <ColumnCards />
     </>
   );
 }

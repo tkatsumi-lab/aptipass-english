@@ -1,26 +1,49 @@
 import type { ColumnBlock } from "@/data/columns";
+import { SERIES_ACCENTS, type SeriesAccent } from "@/lib/seriesAccent";
 
 type ColumnBodyProps = {
   blocks: ColumnBlock[];
+  /** Derived from the article's series via seriesInfo — never from its slug/title. */
+  accent: SeriesAccent;
+  /**
+   * "compact" trims the whitespace around the heading/keyMessage/englishDisplay
+   * "peaks" — used only by 1分英語 so its short-form pacing reads as brisk
+   * rather than a shrunk-down copy of the long-form layout. Every other
+   * block type (paragraph/question/example/insight/table) is unaffected,
+   * keeping the shared reading rhythm intact. Defaults to "spacious", which
+   * is byte-identical to the spacing every series used before this prop existed.
+   */
+  density?: "spacious" | "compact";
 };
 
 /**
- * AptiPass MAGAZINE's editorial renderer. Six block types, each with its
+ * AptiPass MAGAZINE's editorial renderer. Seven block types, each with its
  * own typographic treatment — the point is rhythm (whitespace, scale,
  * rules) rather than boxes/borders/colored fills. Pure Server Component:
  * no client JS, no images, real semantic HTML throughout (a proper
- * <table> for the comparison block, not a styled div grid) so the
- * article's SEO/accessibility structure stays intact under the redesign.
+ * <table> for the comparison block, not a styled div grid) so every
+ * article's SEO/accessibility structure stays intact.
+ *
+ * `accent`/`density` are the only per-series levers here — the block
+ * *types* and their overall shape stay identical across 英語コラム /
+ * 英語のなぜ？ / 1分英語, per AptiPass MAGAZINE's "shared Editorial
+ * Components, series-specific presentation" design.
  */
-export default function ColumnBody({ blocks }: ColumnBodyProps) {
+export default function ColumnBody({ blocks, accent, density = "spacious" }: ColumnBodyProps) {
+  const a = SERIES_ACCENTS[accent];
+  const compact = density === "compact";
+
   return (
     <div className="mt-10">
       {blocks.map((block, index) => {
         switch (block.type) {
           case "heading":
             return (
-              <div key={index} className={index === 0 ? "" : "mt-16 sm:mt-20"}>
-                <div aria-hidden="true" className="h-px w-10 bg-indigo-300" />
+              <div
+                key={index}
+                className={index === 0 ? "" : compact ? "mt-10 sm:mt-12" : "mt-16 sm:mt-20"}
+              >
+                <div aria-hidden="true" className={`h-px w-10 ${a.ruleBg}`} />
                 <h2 className="mt-4 font-serif text-2xl font-bold tracking-tight break-keep text-slate-900 sm:text-3xl">
                   {block.text}
                 </h2>
@@ -39,13 +62,13 @@ export default function ColumnBody({ blocks }: ColumnBodyProps) {
             return (
               <p
                 key={index}
-                className="mx-auto mt-10 mb-2 max-w-md text-center font-serif text-xl leading-snug font-semibold break-keep text-indigo-950 italic sm:text-2xl"
+                className={`mx-auto mt-10 mb-2 max-w-md text-center font-serif text-xl leading-snug font-semibold break-keep italic sm:text-2xl ${a.display}`}
               >
-                <span aria-hidden="true" className="mr-0.5 text-indigo-300 not-italic">
+                <span aria-hidden="true" className={`mr-0.5 not-italic ${a.glyph}`}>
                   “
                 </span>
                 {stripped}
-                <span aria-hidden="true" className="ml-0.5 text-indigo-300 not-italic">
+                <span aria-hidden="true" className={`ml-0.5 not-italic ${a.glyph}`}>
                   ”
                 </span>
               </p>
@@ -54,7 +77,7 @@ export default function ColumnBody({ blocks }: ColumnBodyProps) {
 
           case "example":
             return (
-              <div key={index} className="mt-8 border-l-2 border-indigo-200 pl-5">
+              <div key={index} className={`mt-8 border-l-2 pl-5 ${a.ruleBorder}`}>
                 <p className="font-serif text-lg leading-snug text-slate-900 sm:text-xl">
                   {block.en}
                 </p>
@@ -65,7 +88,7 @@ export default function ColumnBody({ blocks }: ColumnBodyProps) {
           case "insight":
             return (
               <div key={index} className="my-10 border-y border-slate-100 py-6">
-                <span className="text-[11px] font-semibold tracking-[0.2em] text-indigo-500 uppercase">
+                <span className={`text-[11px] font-semibold tracking-[0.2em] uppercase ${a.label}`}>
                   Point
                 </span>
                 <p className="mt-2 font-serif text-lg leading-relaxed font-semibold text-slate-900 sm:text-xl">
@@ -76,8 +99,10 @@ export default function ColumnBody({ blocks }: ColumnBodyProps) {
 
           case "keyMessage":
             return (
-              <div key={index} className="my-14 sm:my-20">
-                <p className="mx-auto max-w-md text-center font-serif text-[26px] leading-[1.5] font-bold tracking-tight break-keep whitespace-pre-line text-indigo-950 sm:max-w-lg sm:text-4xl sm:leading-[1.4]">
+              <div key={index} className={compact ? "my-8 sm:my-10" : "my-14 sm:my-20"}>
+                <p
+                  className={`mx-auto max-w-md text-center font-serif text-[26px] leading-[1.5] font-bold tracking-tight break-keep whitespace-pre-line sm:max-w-lg sm:text-4xl sm:leading-[1.4] ${a.display}`}
+                >
                   {block.text}
                 </p>
                 {block.caption && (
@@ -90,10 +115,10 @@ export default function ColumnBody({ blocks }: ColumnBodyProps) {
 
           case "englishDisplay":
             return (
-              <div key={index} className="my-14 text-center sm:my-20">
-                <div aria-hidden="true" className="mx-auto h-px w-8 bg-indigo-200" />
+              <div key={index} className={compact ? "my-8 text-center sm:my-10" : "my-14 text-center sm:my-20"}>
+                <div aria-hidden="true" className={`mx-auto h-px w-8 ${a.ruleBg}`} />
                 {block.context && (
-                  <p className="mt-4 text-[11px] font-semibold tracking-[0.2em] text-indigo-400 uppercase">
+                  <p className={`mt-4 text-[11px] font-semibold tracking-[0.2em] uppercase ${a.labelMuted}`}>
                     {block.context}
                   </p>
                 )}
