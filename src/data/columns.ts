@@ -47,21 +47,37 @@ export type ColumnBlock =
 
 /**
  * A small Editorial Illustration — line art / simple graphics that support
- * an article's theme, not stock-photo eye-candy. `src` must be a static
- * asset under public/ (no external image hosts, so nothing new to fetch at
- * request time); `width`/`height` are required so `next/image` can reserve
- * layout space and avoid CLS before the image loads. Optional on `Column`:
- * no article uses one yet, and the whole Magazine system — Hero, ColumnBody,
- * /columns, the homepage section — must render correctly with it entirely
- * absent.
+ * an article's theme, not stock-photo eye-candy. Not required per article:
+ * an editor decides case by case, roughly 1 per article (long-form 英語コラム
+ * may use up to ~2), never as a routine SEO-eyecatch habit. `src` must be a
+ * static asset under public/images/magazine/ (no external image hosts, so
+ * nothing new to fetch at request time); `width`/`height` are required so
+ * `next/image` can reserve layout space and avoid CLS before the image
+ * loads. Optional on `Column`: the whole Magazine system — ColumnHero,
+ * ColumnBody, /columns, the homepage section — must render correctly with
+ * it entirely absent, and does today for most articles.
+ *
+ * Per-series illustration direction (what an editor should aim for) and
+ * the full article-production flow live in docs/magazine.md — read that
+ * before commissioning new artwork.
  */
 export type ColumnIllustration = {
   src: string;
   alt: string;
   width: number;
   height: number;
-  /** Where it renders: the article cover (default) or inline within the body's top. */
+  /**
+   * "hero" (default): rendered by ColumnHero, sharing the title/subtitle
+   * row on desktop (~58% text / ~42% illustration), stacked below the
+   * subtitle on mobile — see ColumnHero.tsx.
+   * "inline": rendered once, near the top of the article body, by
+   * src/app/columns/[slug]/page.tsx. No repeatable in-body illustration
+   * slots exist yet (single optional field, not an array) — a real
+   * multi-inline-image use case should extend this deliberately rather
+   * than being forced through today's one-field shape.
+   */
   placement?: "hero" | "inline";
+  /** Optional caption; omit when the image is self-explanatory (the common case — see docs/magazine.md). */
   caption?: string;
 };
 

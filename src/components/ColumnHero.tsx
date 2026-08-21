@@ -14,11 +14,21 @@ type ColumnHeroProps = {
  * the one place series presentation earns its own JSX branch per series;
  * everything else (ColumnBody, /columns, homepage) stays fully data-driven
  * off `seriesInfo` with no series-specific markup of its own.
+ *
+ * `column.illustration` (optional — see ColumnIllustration in
+ * src/data/columns.ts) is the other data-driven switch here: when a
+ * `placement: "hero"` (or unset) illustration exists, title+subtitle share
+ * the row with it in a ~58/42 Editorial Feature Layout on desktop, stacked
+ * title → subtitle → illustration on mobile. With no illustration — every
+ * article today except one — the Hero renders exactly as it always has,
+ * at the narrower single-column width. Nothing here checks a slug.
  */
 export default function ColumnHero({ column }: ColumnHeroProps) {
   const presentation = seriesInfo[column.series];
   const a = SERIES_ACCENTS[presentation.accent];
   const compact = presentation.density === "compact";
+  const heroIllustration =
+    column.illustration && column.illustration.placement !== "inline" ? column.illustration : undefined;
 
   const wash =
     presentation.accent === "amber"
@@ -37,9 +47,22 @@ export default function ColumnHero({ column }: ColumnHeroProps) {
     </>
   );
 
+  const titleBlock = (
+    <div>
+      <h1 className="text-balance break-keep font-serif text-3xl leading-[1.3] font-bold tracking-tight text-slate-900 sm:text-5xl sm:leading-[1.25]">
+        {column.title}
+      </h1>
+      <p className="mt-5 max-w-xl text-sm leading-relaxed text-slate-500 sm:text-base">{column.subtitle}</p>
+    </div>
+  );
+
   return (
     <div className={wash}>
-      <div className={`mx-auto max-w-2xl px-4 sm:px-6 ${compact ? "pt-10 pb-5 sm:pt-12" : "pt-12 pb-6 sm:pt-16"}`}>
+      <div
+        className={`mx-auto px-4 sm:px-6 ${compact ? "pt-10 pb-5 sm:pt-12" : "pt-12 pb-6 sm:pt-16"} ${
+          heroIllustration ? "max-w-4xl" : "max-w-2xl"
+        }`}
+      >
         <p className="text-sm font-bold tracking-[0.28em] text-slate-900 uppercase sm:text-base">
           AptiPass MAGAZINE
         </p>
@@ -75,26 +98,26 @@ export default function ColumnHero({ column }: ColumnHeroProps) {
           <span className={a.label}>{column.series}</span>
         </div>
 
-        <h1 className="mt-6 text-balance break-keep font-serif text-3xl leading-[1.3] font-bold tracking-tight text-slate-900 sm:text-5xl sm:leading-[1.25]">
-          {column.title}
-        </h1>
-        <p className="mt-5 max-w-xl text-sm leading-relaxed text-slate-500 sm:text-base">
-          {column.subtitle}
-        </p>
-
-        {column.illustration && column.illustration.placement !== "inline" && (
-          <div className="mt-8">
-            <Image
-              src={column.illustration.src}
-              alt={column.illustration.alt}
-              width={column.illustration.width}
-              height={column.illustration.height}
-              className="h-auto w-full max-w-sm"
-            />
-            {column.illustration.caption && (
-              <p className="mt-2 text-xs text-slate-400">{column.illustration.caption}</p>
-            )}
+        {heroIllustration ? (
+          <div className="mt-6 flex flex-col gap-8 sm:flex-row sm:items-center sm:gap-10">
+            <div className="sm:w-[58%]">{titleBlock}</div>
+            <div className="sm:w-[42%]">
+              <Image
+                src={heroIllustration.src}
+                alt={heroIllustration.alt}
+                width={heroIllustration.width}
+                height={heroIllustration.height}
+                sizes="(min-width: 640px) 42vw, 100vw"
+                className="h-auto w-full"
+                priority
+              />
+              {heroIllustration.caption && (
+                <p className="mt-2 text-xs text-slate-400">{heroIllustration.caption}</p>
+              )}
+            </div>
           </div>
+        ) : (
+          <div className="mt-6">{titleBlock}</div>
         )}
       </div>
     </div>
