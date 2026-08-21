@@ -25,7 +25,23 @@ export type ColumnBlock =
   /** A key realization/"aha" sentence — set apart by whitespace and a rule, not a filled box. */
   | { type: "insight"; text: string }
   /** A "1 Japanese phrase → N English phrases" comparison. `caption` is the editorial framing line shown above it. */
-  | { type: "table"; caption?: string; headers: string[]; rows: string[][] };
+  | { type: "table"; caption?: string; headers: string[]; rows: string[][] }
+  /**
+   * A magazine "spread copy" moment — the article's thesis stated as one big
+   * line, not another paragraph. `text` may contain `\n` for deliberate,
+   * author-chosen line breaks (a poster headline, not flowing prose); an
+   * optional `caption` sits underneath, visually much quieter (e.g. a
+   * translation or a one-line gloss). Use sparingly — 1–3 per article.
+   */
+  | { type: "keyMessage"; text: string; caption?: string }
+  /**
+   * A single English sentence promoted to "the thing worth remembering,"
+   * distinct from the routine `example` pairs. `en` may contain `\n` for a
+   * deliberate line break; `context` is an optional small scene label above
+   * it (e.g. "返信を待っている場面で"); `ja` is an optional gloss, kept
+   * visibly weaker than the English.
+   */
+  | { type: "englishDisplay"; en: string; ja?: string; context?: string };
 
 /**
  * `series`/`issueNumber`/`readingTimeMinutes` exist so a future editor
@@ -100,6 +116,11 @@ export const columns: Column[] = [
       },
       { type: "paragraph", text: "少し覗いてみましょう。" },
       { type: "paragraph", text: "そこには、英語と日本語の面白い違いがあります。" },
+
+      {
+        type: "keyMessage",
+        text: "「よろしくお願いします」を\n英語に訳そうとするから、\n難しくなる。",
+      },
 
       { type: "heading", text: "初めて会った人への「よろしくお願いします」" },
       { type: "paragraph", text: "まずは、一番分かりやすい場面から考えてみましょう。" },
@@ -185,8 +206,12 @@ export const columns: Column[] = [
       { type: "question", text: "「以上、よろしくお願いいたします。」" },
       { type: "paragraph", text: "さて、英語では何と書けばいいのでしょう。" },
       { type: "paragraph", text: "実はここでも、答えは一つではありません。" },
-      { type: "paragraph", text: "返信を待っているなら、" },
-      { type: "example", en: "I look forward to hearing from you.", ja: "ご連絡をお待ちしています。" },
+      {
+        type: "englishDisplay",
+        en: "I look forward to\nhearing from you.",
+        ja: "ご連絡をお待ちしています。",
+        context: "返信を待っている場面で",
+      },
       { type: "paragraph", text: "相手の協力に感謝したいなら、" },
       { type: "paragraph", text: "Thank you for your help." },
       { type: "paragraph", text: "という形も考えられます。" },
@@ -267,6 +292,12 @@ export const columns: Column[] = [
       { type: "paragraph", text: "日本語を英単語に置き換えたわけではありません。" },
       { type: "insight", text: "自分の気持ちを英語にしたんです。" },
 
+      {
+        type: "keyMessage",
+        text: "TRANSLATE THE SITUATION,\nNOT THE WORDS.",
+        caption: "言葉ではなく、場面を訳す。",
+      },
+
       { type: "heading", text: "「お疲れさま」だって、同じかもしれません" },
       { type: "paragraph", text: "実はこの考え方、「よろしくお願いします」だけの話ではありません。" },
       { type: "paragraph", text: "例えば、" },
@@ -345,3 +376,31 @@ export const columns: Column[] = [
 export function getColumnBySlug(slug: string): Column | undefined {
   return columns.find((c) => c.slug === slug);
 }
+
+/** "ISSUE 001" padding, shared by every page that shows an issue number. */
+export function formatIssueNumber(issueNumber: number): string {
+  return String(issueNumber).padStart(3, "0");
+}
+
+/**
+ * Newest-first across all series combined — the single ordering the
+ * Magazine Issue System is built on. /columns and the homepage section both
+ * read this instead of raw `columns`, so "latest issue" vs. "back issues"
+ * stays correct as more series are interleaved, with no per-page logic to
+ * update when a second or third series starts publishing.
+ */
+export const columnsSortedByDate: Column[] = [...columns].sort(
+  (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+);
+
+/**
+ * Short identity for each series — enough to tell "the same magazine's
+ * different serialization" apart without a per-series color scheme. Add an
+ * entry here when 英語のなぜ？ / 1分英語 start publishing; no UI code needs
+ * to change.
+ */
+export const seriesInfo: Record<string, { description: string }> = {
+  英語コラム: {
+    description: "日常のふとした「あれ、英語で何て言うんだっけ？」から出発して、英語と日本語の面白い違いを読み解く。",
+  },
+};

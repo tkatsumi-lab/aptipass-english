@@ -4,7 +4,7 @@ import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import ColumnBody from "@/components/ColumnBody";
 import JsonLd from "@/components/JsonLd";
-import { columns, getColumnBySlug } from "@/data/columns";
+import { columns, formatIssueNumber, getColumnBySlug } from "@/data/columns";
 import { buildArticleJsonLd, buildMetadata } from "@/lib/seo";
 
 export const dynamicParams = false;
@@ -65,11 +65,11 @@ export default async function ColumnDetailPage({ params }: Props) {
             <span>{column.series}</span>
           </div>
           <div className="mt-3 flex items-center gap-2 text-xs text-slate-400">
-            <span>ISSUE {String(column.issueNumber).padStart(3, "0")}</span>
+            <span>ISSUE {formatIssueNumber(column.issueNumber)}</span>
             <span aria-hidden="true">・</span>
             <span>{column.readingTimeMinutes} MIN READ</span>
           </div>
-          <h1 className="mt-6 text-balance font-serif text-3xl leading-[1.3] font-bold tracking-tight text-slate-900 sm:text-5xl sm:leading-[1.25]">
+          <h1 className="mt-6 text-balance break-keep font-serif text-3xl leading-[1.3] font-bold tracking-tight text-slate-900 sm:text-5xl sm:leading-[1.25]">
             {column.title}
           </h1>
           <p className="mt-5 max-w-xl text-sm leading-relaxed text-slate-500 sm:text-base">

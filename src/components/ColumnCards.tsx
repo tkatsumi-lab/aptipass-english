@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { columns } from "@/data/columns";
+import { columnsSortedByDate, formatIssueNumber } from "@/data/columns";
 
 /**
  * Homepage entry point for AptiPass MAGAZINE. Deliberately placed last on
@@ -8,13 +8,13 @@ import { columns } from "@/data/columns";
  * compete with CategoryGrid/PurposeSection/FeaturedServices for attention
  * above the fold.
  *
- * Reads `columns` directly, so it scales from 1 article to many without
- * code changes: the latest issue gets a featured teaser; any additional
- * issues (once they exist) list underneath it. Nothing here is specific
- * to the first column's content.
+ * Reads `columnsSortedByDate`, so it scales from 1 article to many (and
+ * from 1 series to several) without code changes: the newest issue across
+ * all series gets a featured teaser; any additional issues list underneath
+ * it. Nothing here is specific to the first column's content.
  */
 export default function ColumnCards() {
-  const [featured, ...rest] = columns;
+  const [featured, ...rest] = columnsSortedByDate;
   if (!featured) return null;
 
   return (
@@ -46,13 +46,13 @@ export default function ColumnCards() {
               <span aria-hidden="true" className="text-indigo-200">
                 /
               </span>
-              <span>ISSUE {String(featured.issueNumber).padStart(3, "0")}</span>
+              <span>ISSUE {formatIssueNumber(featured.issueNumber)}</span>
               <span aria-hidden="true" className="text-indigo-200">
                 /
               </span>
               <span className="text-slate-400 normal-case">{featured.readingTimeMinutes} MIN READ</span>
             </div>
-            <p className="mt-3 font-serif text-lg leading-snug font-bold text-slate-900 group-hover:text-indigo-700 sm:text-2xl">
+            <p className="mt-3 max-w-xl font-serif text-xl leading-snug font-bold break-keep text-slate-900 group-hover:text-indigo-700 sm:text-3xl">
               {featured.title}
             </p>
             <p className="mt-2 max-w-xl text-sm text-slate-500 sm:text-base">{featured.teaser}</p>

@@ -21,7 +21,7 @@ export default function ColumnBody({ blocks }: ColumnBodyProps) {
             return (
               <div key={index} className={index === 0 ? "" : "mt-16 sm:mt-20"}>
                 <div aria-hidden="true" className="h-px w-10 bg-indigo-300" />
-                <h2 className="mt-4 font-serif text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+                <h2 className="mt-4 font-serif text-2xl font-bold tracking-tight break-keep text-slate-900 sm:text-3xl">
                   {block.text}
                 </h2>
               </div>
@@ -39,7 +39,7 @@ export default function ColumnBody({ blocks }: ColumnBodyProps) {
             return (
               <p
                 key={index}
-                className="mx-auto mt-10 mb-2 max-w-md text-center font-serif text-xl leading-snug font-semibold text-indigo-950 italic sm:text-2xl"
+                className="mx-auto mt-10 mb-2 max-w-md text-center font-serif text-xl leading-snug font-semibold break-keep text-indigo-950 italic sm:text-2xl"
               >
                 <span aria-hidden="true" className="mr-0.5 text-indigo-300 not-italic">
                   “
@@ -71,6 +71,35 @@ export default function ColumnBody({ blocks }: ColumnBodyProps) {
                 <p className="mt-2 font-serif text-lg leading-relaxed font-semibold text-slate-900 sm:text-xl">
                   {block.text}
                 </p>
+              </div>
+            );
+
+          case "keyMessage":
+            return (
+              <div key={index} className="my-14 sm:my-20">
+                <p className="mx-auto max-w-md text-center font-serif text-[26px] leading-[1.5] font-bold tracking-tight break-keep whitespace-pre-line text-indigo-950 sm:max-w-lg sm:text-4xl sm:leading-[1.4]">
+                  {block.text}
+                </p>
+                {block.caption && (
+                  <p className="mt-4 text-center text-sm break-keep text-slate-400 sm:text-base">
+                    {block.caption}
+                  </p>
+                )}
+              </div>
+            );
+
+          case "englishDisplay":
+            return (
+              <div key={index} className="my-12 text-center sm:my-16">
+                {block.context && (
+                  <p className="text-[11px] font-semibold tracking-[0.2em] text-indigo-400 uppercase">
+                    {block.context}
+                  </p>
+                )}
+                <p className="mx-auto mt-3 max-w-lg text-balance font-serif text-2xl leading-snug font-semibold whitespace-pre-line text-slate-900 sm:text-4xl sm:leading-snug">
+                  {block.en}
+                </p>
+                {block.ja && <p className="mt-3 text-sm text-slate-400 sm:text-base">{block.ja}</p>}
               </div>
             );
 
