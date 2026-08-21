@@ -52,45 +52,59 @@ export default async function ColumnDetailPage({ params }: Props) {
         })}
       />
 
-      <article className="mx-auto max-w-2xl px-4 py-10 sm:px-6">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-600 ring-1 ring-rose-200">
-          <span aria-hidden="true">{column.emoji}</span>
-          英語コラム
-        </span>
+      {/* Magazine cover — a distinct "paper" band for the issue's masthead + title,
+          the same "give this section its own background" device DecisionCTA already
+          uses elsewhere on the site, just tuned quiet/warm instead of dark/bold. */}
+      <div className="bg-gradient-to-b from-indigo-50/70 via-white to-white">
+        <div className="mx-auto max-w-2xl px-4 pt-12 pb-6 sm:px-6 sm:pt-16">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-semibold tracking-[0.18em] text-indigo-500 uppercase">
+            <span>AptiPass MAGAZINE</span>
+            <span aria-hidden="true" className="text-indigo-200">
+              /
+            </span>
+            <span>{column.series}</span>
+          </div>
+          <div className="mt-3 flex items-center gap-2 text-xs text-slate-400">
+            <span>ISSUE {String(column.issueNumber).padStart(3, "0")}</span>
+            <span aria-hidden="true">・</span>
+            <span>{column.readingTimeMinutes} MIN READ</span>
+          </div>
+          <h1 className="mt-6 text-balance font-serif text-3xl leading-[1.3] font-bold tracking-tight text-slate-900 sm:text-5xl sm:leading-[1.25]">
+            {column.title}
+          </h1>
+          <p className="mt-5 max-w-xl text-sm leading-relaxed text-slate-500 sm:text-base">
+            {column.subtitle}
+          </p>
+        </div>
+      </div>
 
-        <h1 className="mt-4 text-2xl font-bold text-balance text-slate-900 sm:text-3xl">
-          {column.title}
-        </h1>
-        <p className="mt-3 text-sm leading-relaxed text-slate-500 sm:text-base">
-          {column.subtitle}
-        </p>
-
+      <article className="mx-auto max-w-2xl px-4 pb-10 sm:px-6">
         <ColumnBody blocks={column.body} />
 
-        {/* Editor's closing note — visually separate from the main narrative body. */}
-        <div className="mt-12 rounded-3xl bg-slate-50 p-6 ring-1 ring-slate-100 sm:p-8">
-          <p className="text-xs font-semibold tracking-wide text-slate-400 uppercase">
+        {/* Editor's closing note — a quiet postscript, not another boxed card. */}
+        <div className="mt-16 border-t border-slate-100 pt-8">
+          <p className="text-xs font-semibold tracking-[0.2em] text-slate-400 uppercase">
             AptiPass English 編集部より
           </p>
-          <div className="mt-3 space-y-3 text-sm leading-relaxed text-slate-600 sm:text-[15px]">
+          <div className="mt-4 space-y-3 text-sm leading-relaxed text-slate-600 sm:text-[15px]">
             {column.editorNote.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
           </div>
         </div>
 
-        {/* Soft, non-affiliate internal link — deliberately not a service CTA. */}
-        <div className="mt-6 flex flex-col items-start gap-2 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-slate-600">英会話を実際に練習してみたい人へ</p>
+        {/* Soft, non-affiliate internal link — inline text, not a CTA box. */}
+        <p className="mt-8 text-sm text-slate-500">
+          英会話を実際に練習してみたい人へ —{" "}
           <Link
             href={`/categories/${column.relatedCategorySlug}`}
             prefetch={false}
-            className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700"
+            className="font-semibold text-indigo-600 hover:text-indigo-700"
           >
             {column.relatedCategoryLabel}を見てみる
             <span aria-hidden="true">→</span>
           </Link>
-        </div>
+        </p>
       </article>
     </>
   );

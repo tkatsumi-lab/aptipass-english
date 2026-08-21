@@ -15,20 +15,34 @@
  */
 
 export type ColumnBlock =
+  /** Section break within the article — a magazine-style divider, not just a bold subheading. */
   | { type: "heading"; text: string }
   | { type: "paragraph"; text: string }
-  /** A reader-facing rhetorical question or inner voice — rendered as a quiet, distinct callout. */
+  /** A reader-facing rhetorical question or inner voice — shown large, as the reader's own thought. */
   | { type: "question"; text: string }
-  /** A paired English sentence + Japanese translation, rendered as a small card. */
+  /** A paired English sentence + Japanese translation — an editorial pull-quote, not a bordered card. */
   | { type: "example"; en: string; ja: string }
-  /** A key realization/"aha" sentence — rendered as an accented callout. */
+  /** A key realization/"aha" sentence — set apart by whitespace and a rule, not a filled box. */
   | { type: "insight"; text: string }
-  | { type: "table"; headers: string[]; rows: string[][] };
+  /** A "1 Japanese phrase → N English phrases" comparison. `caption` is the editorial framing line shown above it. */
+  | { type: "table"; caption?: string; headers: string[]; rows: string[][] };
 
+/**
+ * `series`/`issueNumber`/`readingTimeMinutes` exist so a future editor
+ * (ChatGPT drafts, Claude Code implements) only ever adds a new `Column`
+ * object here — the Magazine cover/Hero, the /columns back-issue list, and
+ * the homepage section all read these fields and update themselves. None
+ * of that UI code branches on which article it's rendering.
+ */
 export type Column = {
   id: string;
   /** URL slug under /columns/[slug] */
   slug: string;
+  /** e.g. "英語コラム" now; "英語のなぜ？" / "1分英語" are future series using the same Column shape. */
+  series: string;
+  /** "ISSUE 001" — per-series issue number, not a global article count. */
+  issueNumber: number;
+  readingTimeMinutes: number;
   title: string;
   subtitle: string;
   emoji: string;
@@ -50,6 +64,9 @@ export const columns: Column[] = [
   {
     id: "yoroshiku-onegaishimasu-english",
     slug: "yoroshiku-onegaishimasu-english",
+    series: "英語コラム",
+    issueNumber: 1,
+    readingTimeMinutes: 6,
     title: "なぜ英語では「よろしくお願いします」を一言で言えないのか？",
     subtitle: "「英語が出てこない」のには、ちゃんと理由があります",
     emoji: "🤔",
@@ -197,6 +214,7 @@ export const columns: Column[] = [
       { type: "paragraph", text: "場面ごとに並べてみると、分かりやすくなります。" },
       {
         type: "table",
+        caption: "「よろしくお願いします」という1つの言葉が、英語ではこう分かれます。",
         headers: ["こんなとき", "伝えたいこと", "英語の例"],
         rows: [
           ["初めて会った", "会えてうれしい", "Nice to meet you."],

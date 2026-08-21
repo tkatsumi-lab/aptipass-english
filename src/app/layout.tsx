@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Shippori_Mincho } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -53,6 +53,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Display serif for "AptiPass MAGAZINE" (the editorial /columns section
+// only) — an editorial redesign needs a headline face distinct from the
+// site's Geist Sans body type to read as a magazine rather than a blog.
+// Loaded exactly like Geist above (next/font/google, build-time, zero
+// runtime JS/network cost) — see src/data/columns.ts and ColumnBody.tsx.
+const magazineSerif = Shippori_Mincho({
+  variable: "--font-magazine-serif",
+  subsets: ["latin"],
+  weight: ["400", "600", "800"],
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://english.aptipass.com"),
   title: "英語学習サービスを比較・探す | AptiPass English",
@@ -64,7 +75,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ja"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${magazineSerif.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-white">
         {GA_MEASUREMENT_ID && (

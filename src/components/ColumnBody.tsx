@@ -5,114 +5,140 @@ type ColumnBodyProps = {
 };
 
 /**
- * Renders a column's block array with distinct visual treatment per block
- * type — the "文章のリズムを壊さない範囲で視覚的な変化をつける" requirement.
- * Plain server-rendered markup, no client-side JS: reading a long article
- * needs zero interactivity, so this stays a Server Component.
+ * AptiPass MAGAZINE's editorial renderer. Six block types, each with its
+ * own typographic treatment — the point is rhythm (whitespace, scale,
+ * rules) rather than boxes/borders/colored fills. Pure Server Component:
+ * no client JS, no images, real semantic HTML throughout (a proper
+ * <table> for the comparison block, not a styled div grid) so the
+ * article's SEO/accessibility structure stays intact under the redesign.
  */
 export default function ColumnBody({ blocks }: ColumnBodyProps) {
   return (
-    <div className="mt-8">
+    <div className="mt-10">
       {blocks.map((block, index) => {
         switch (block.type) {
           case "heading":
             return (
-              <h2
-                key={index}
-                className={`text-xl font-bold text-slate-900 sm:text-2xl ${index === 0 ? "" : "mt-12"}`}
-              >
-                {block.text}
-              </h2>
+              <div key={index} className={index === 0 ? "" : "mt-16 sm:mt-20"}>
+                <div aria-hidden="true" className="h-px w-10 bg-indigo-300" />
+                <h2 className="mt-4 font-serif text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+                  {block.text}
+                </h2>
+              </div>
             );
+
           case "paragraph":
             return (
-              <p key={index} className="mt-4 text-[15px] leading-[1.9] text-slate-700 sm:text-base">
+              <p key={index} className="mt-5 text-[16px] leading-[2] text-slate-700 sm:text-[17px]">
                 {block.text}
               </p>
             );
-          case "question":
+
+          case "question": {
+            const stripped = block.text.replace(/^[「“]|[」”]$/g, "");
             return (
               <p
                 key={index}
-                className="mt-6 rounded-2xl bg-rose-50 px-5 py-4 text-[15px] leading-relaxed font-medium text-rose-900 italic sm:text-base"
+                className="mx-auto mt-10 mb-2 max-w-md text-center font-serif text-xl leading-snug font-semibold text-indigo-950 italic sm:text-2xl"
               >
-                <span aria-hidden="true" className="mr-1 not-italic text-rose-300">
+                <span aria-hidden="true" className="mr-0.5 text-indigo-300 not-italic">
                   “
                 </span>
-                {block.text.replace(/^[「“]|[」”]$/g, "")}
-                <span aria-hidden="true" className="ml-1 not-italic text-rose-300">
+                {stripped}
+                <span aria-hidden="true" className="ml-0.5 text-indigo-300 not-italic">
                   ”
                 </span>
               </p>
             );
+          }
+
           case "example":
             return (
-              <div
-                key={index}
-                className="mt-6 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm"
-              >
-                <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-slate-500 uppercase">
-                  EN
-                </span>
-                <p className="mt-2 text-base font-semibold text-slate-900 sm:text-lg">{block.en}</p>
+              <div key={index} className="mt-8 border-l-2 border-indigo-200 pl-5">
+                <p className="font-serif text-lg leading-snug text-slate-900 sm:text-xl">
+                  {block.en}
+                </p>
                 <p className="mt-1.5 text-sm text-slate-500">{block.ja}</p>
               </div>
             );
+
           case "insight":
             return (
-              <div
-                key={index}
-                className="mt-6 rounded-r-2xl border-l-4 border-rose-400 bg-rose-50/60 py-3 pr-4 pl-5"
-              >
-                <span className="text-[11px] font-semibold tracking-wide text-rose-500 uppercase">
-                  気づき
+              <div key={index} className="my-10 border-y border-slate-100 py-6">
+                <span className="text-[11px] font-semibold tracking-[0.2em] text-indigo-500 uppercase">
+                  Point
                 </span>
-                <p className="mt-1 text-[15px] leading-relaxed font-medium text-slate-800 sm:text-base">
+                <p className="mt-2 font-serif text-lg leading-relaxed font-semibold text-slate-900 sm:text-xl">
                   {block.text}
                 </p>
               </div>
             );
-          case "table":
+
+          case "table": {
+            const lastIndex = block.headers.length - 1;
             return (
-              <div
-                key={index}
-                className="mt-6 overflow-x-auto rounded-2xl border border-slate-100 shadow-sm"
-              >
-                <table className="w-full min-w-[480px] border-collapse bg-white text-left text-sm">
-                  <thead>
-                    <tr className="border-b border-slate-100 bg-slate-50">
-                      {block.headers.map((header) => (
-                        <th
-                          key={header}
-                          className="px-4 py-3 text-xs font-semibold whitespace-nowrap text-slate-500"
-                        >
-                          {header}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {block.rows.map((row, rowIndex) => (
-                      <tr
-                        key={rowIndex}
-                        className={rowIndex % 2 === 0 ? "bg-white" : "bg-slate-50/60"}
-                      >
-                        {row.map((cell, cellIndex) => (
-                          <td
-                            key={cellIndex}
-                            className={`px-4 py-3 align-top text-slate-700 ${
-                              cellIndex === row.length - 1 ? "font-medium text-slate-900" : ""
-                            }`}
+              <div key={index} className="mt-10">
+                {block.caption && <p className="text-sm text-slate-500">{block.caption}</p>}
+                <div className="mt-4 rounded-2xl border border-slate-100 px-5 sm:px-6">
+                  {/* Desktop: a real <table> for correct tabular semantics/SEO. */}
+                  <table className="hidden w-full border-collapse text-left sm:table">
+                    <thead>
+                      <tr className="border-b border-slate-200">
+                        {block.headers.map((header) => (
+                          <th
+                            key={header}
+                            className="py-3 pr-6 text-xs font-semibold tracking-wide text-slate-400 uppercase last:pr-0"
                           >
-                            {cell}
-                          </td>
+                            {header}
+                          </th>
                         ))}
                       </tr>
+                    </thead>
+                    <tbody>
+                      {block.rows.map((row, rowIndex) => (
+                        <tr
+                          key={rowIndex}
+                          className={rowIndex > 0 ? "border-t border-slate-100" : ""}
+                        >
+                          {row.map((cell, cellIndex) => (
+                            <td
+                              key={cellIndex}
+                              className={`py-4 pr-6 align-top last:pr-0 ${
+                                cellIndex === lastIndex
+                                  ? "font-serif text-base font-semibold text-slate-900"
+                                  : "text-sm text-slate-600"
+                              }`}
+                            >
+                              {cell}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+
+                  {/* Mobile: the same data, stacked as an editorial list instead of a scrolling grid. */}
+                  <div className="divide-y divide-slate-100 sm:hidden">
+                    {block.rows.map((row, rowIndex) => (
+                      <div key={rowIndex} className="py-4">
+                        {row.slice(0, lastIndex).map((cell, cellIndex) => (
+                          <p
+                            key={cellIndex}
+                            className={cellIndex === 0 ? "text-xs text-slate-400" : "mt-0.5 text-sm text-slate-600"}
+                          >
+                            {cell}
+                          </p>
+                        ))}
+                        <p className="mt-1.5 font-serif text-base font-semibold text-slate-900">
+                          {row[lastIndex]}
+                        </p>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+                </div>
               </div>
             );
+          }
         }
       })}
     </div>

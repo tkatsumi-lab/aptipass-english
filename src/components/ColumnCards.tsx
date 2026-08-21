@@ -2,63 +2,87 @@ import Link from "next/link";
 import { columns } from "@/data/columns";
 
 /**
- * Homepage entry point for the "英語コラム" editorial section. Deliberately
- * placed last on the homepage (see src/app/page.tsx) — this is a discovery
- * hook, not the site's primary task (finding/comparing a service), so it
- * shouldn't compete with CategoryGrid/PurposeSection/FeaturedServices for
- * attention above the fold.
+ * Homepage entry point for AptiPass MAGAZINE. Deliberately placed last on
+ * the homepage (see src/app/page.tsx) — this is a discovery hook, not the
+ * site's primary task (finding/comparing a service), so it shouldn't
+ * compete with CategoryGrid/PurposeSection/FeaturedServices for attention
+ * above the fold.
+ *
+ * Reads `columns` directly, so it scales from 1 article to many without
+ * code changes: the latest issue gets a featured teaser; any additional
+ * issues (once they exist) list underneath it. Nothing here is specific
+ * to the first column's content.
  */
 export default function ColumnCards() {
+  const [featured, ...rest] = columns;
+  if (!featured) return null;
+
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-      <div className="mx-auto max-w-2xl text-center">
-        <span className="inline-flex items-center rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold text-rose-600 ring-1 ring-rose-200">
-          英語コラム
-        </span>
-        <h2 className="mt-3 text-2xl font-bold text-slate-900 sm:text-3xl">
-          英語の「なぜ？」を、会話するように読む
-        </h2>
-        <p className="mt-2 text-sm text-slate-500 sm:text-base">
-          サービス選びの合間に、英語がちょっと面白くなる読み物です。
-        </p>
-      </div>
-
-      <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {columns.map((column) => (
-          <li key={column.id}>
+    <section className="bg-gradient-to-b from-indigo-50/50 to-white">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <div className="rounded-3xl border border-indigo-100 bg-white p-6 shadow-sm sm:p-10">
+          <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-baseline">
+            <div>
+              <p className="text-[11px] font-semibold tracking-[0.18em] text-indigo-500 uppercase">
+                AptiPass MAGAZINE
+              </p>
+              <h2 className="mt-2 text-xl font-bold text-slate-900 sm:text-2xl">
+                英語の「なぜ？」を、会話するように読む
+              </h2>
+            </div>
             <Link
-              href={`/columns/${column.slug}`}
+              href="/columns"
               prefetch={false}
-              className="flex h-full flex-col gap-3 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md"
+              className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-slate-500 hover:text-indigo-600"
             >
-              <span
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50 text-lg"
-                aria-hidden="true"
-              >
-                {column.emoji}
-              </span>
-              <span className="block text-sm font-semibold text-slate-900 sm:text-base">
-                {column.title}
-              </span>
-              <span className="block text-xs text-slate-500 sm:text-sm">{column.teaser}</span>
-              <span className="mt-auto inline-flex items-center gap-1 text-xs font-semibold text-rose-600">
-                続きを読む
-                <span aria-hidden="true">→</span>
-              </span>
+              コラムをすべて見る
+              <span aria-hidden="true">→</span>
             </Link>
-          </li>
-        ))}
-      </ul>
+          </div>
 
-      <div className="mt-6 text-center">
-        <Link
-          href="/columns"
-          prefetch={false}
-          className="inline-flex items-center gap-1 text-sm font-semibold text-rose-600 hover:text-rose-700"
-        >
-          英語コラムをもっと読む
-          <span aria-hidden="true">→</span>
-        </Link>
+          <Link href={`/columns/${featured.slug}`} prefetch={false} className="group mt-8 block">
+            <div className="flex items-center gap-2 text-[11px] font-semibold tracking-[0.15em] text-indigo-500 uppercase">
+              <span>{featured.series}</span>
+              <span aria-hidden="true" className="text-indigo-200">
+                /
+              </span>
+              <span>ISSUE {String(featured.issueNumber).padStart(3, "0")}</span>
+              <span aria-hidden="true" className="text-indigo-200">
+                /
+              </span>
+              <span className="text-slate-400 normal-case">{featured.readingTimeMinutes} MIN READ</span>
+            </div>
+            <p className="mt-3 font-serif text-lg leading-snug font-bold text-slate-900 group-hover:text-indigo-700 sm:text-2xl">
+              {featured.title}
+            </p>
+            <p className="mt-2 max-w-xl text-sm text-slate-500 sm:text-base">{featured.teaser}</p>
+            <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-indigo-600">
+              続きを読む
+              <span aria-hidden="true">→</span>
+            </span>
+          </Link>
+
+          {rest.length > 0 && (
+            <ul className="mt-8 divide-y divide-slate-100 border-t border-slate-100">
+              {rest.map((column) => (
+                <li key={column.id}>
+                  <Link
+                    href={`/columns/${column.slug}`}
+                    prefetch={false}
+                    className="group flex items-baseline justify-between gap-4 py-4"
+                  >
+                    <span className="text-sm font-semibold text-slate-700 group-hover:text-indigo-700">
+                      {column.title}
+                    </span>
+                    <span aria-hidden="true" className="shrink-0 text-indigo-400">
+                      →
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </section>
   );
