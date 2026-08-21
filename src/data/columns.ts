@@ -528,6 +528,99 @@ export const columns: Column[] = [
     relatedCategorySlug: "online-eikaiwa",
     relatedCategoryLabel: "オンライン英会話",
   },
+  {
+    id: "im-exciting-vs-im-excited",
+    slug: "im-exciting-vs-im-excited",
+    series: "1分英語",
+    issueNumber: 1,
+    readingTimeMinutes: 1,
+    title: "「I’m exciting.」だと、なぜ変なの？",
+    subtitle: "「ワクワクしています」と言いたいだけなのに、excitingを使うと意味が変わります。",
+    emoji: "✨",
+    // Same publish day as the other two issue #1s; a later same-day time
+    // keeps it unambiguously newest in columnsSortedByDate.
+    publishedAt: "2026-08-21T20:30:00+09:00",
+    seoTitle: "「I’m exciting.」はなぜ間違い？excitingとexcitedの違いを1分で解説",
+    seoDescription:
+      "「ワクワクしています」をI’m exciting.と言うと、なぜ意味が変わるのでしょう？excitingとexcitedの違いを、I’m excited!を使った例文で1分でわかりやすく解説します。",
+    teaser: "「I’m exciting.」と言うと、意味が変わってしまいます。1分でexcitedとの違いを確認しましょう。",
+    body: [
+      {
+        type: "question",
+        text: "「私はワクワクしています」\n英語なら、\nI’m exciting.\n……でよさそうじゃないですか？",
+      },
+
+      { type: "paragraph", text: "exciting は「ワクワクする」。" },
+      { type: "paragraph", text: "学校でそう覚えた人も多いかもしれません。" },
+      { type: "paragraph", text: "ところが、自分がワクワクしていると言いたいなら、普通はこうです。" },
+
+      {
+        type: "englishDisplay",
+        en: "I’m excited.",
+        ja: "私はワクワクしています。",
+        context: "自分がワクワクしているならこちら",
+      },
+
+      { type: "paragraph", text: "では、" },
+      { type: "paragraph", text: "I’m exciting." },
+      { type: "paragraph", text: "と言うと、何が違うのでしょう？" },
+
+      {
+        type: "keyMessage",
+        text: "excited は\n「ワクワクさせられている人」\n\nexciting は\n「人をワクワクさせるもの・人」",
+      },
+
+      { type: "paragraph", text: "たとえば、映画がとても面白くてワクワクするなら、" },
+      { type: "example", en: "The movie is exciting.", ja: "その映画はワクワクする。" },
+      { type: "paragraph", text: "その映画を観て、自分がワクワクしているなら、" },
+      { type: "example", en: "I’m excited.", ja: "私はワクワクしている。" },
+
+      { type: "paragraph", text: "つまり、" },
+      { type: "paragraph", text: "I’m exciting." },
+      { type: "paragraph", text: "だと、" },
+      { type: "paragraph", text: "「私はワクワクしています」" },
+      { type: "paragraph", text: "というより、" },
+      { type: "paragraph", text: "「私は人をワクワクさせる人です」" },
+      { type: "paragraph", text: "という意味に近づいてしまうんです。" },
+
+      {
+        type: "question",
+        text: "自分で\n「私って、刺激的な人なんです」\nと言っている感じになるんですね。",
+      },
+
+      {
+        type: "insight",
+        text: "覚え方はシンプルです。\n気持ちを感じている人 → excited\nその気持ちを起こさせる側 → exciting",
+      },
+
+      { type: "heading", text: "これだけ覚えて帰りましょう" },
+
+      {
+        type: "englishDisplay",
+        en: "I’m excited!",
+        ja: "楽しみ！／ワクワクしてる！",
+        context: "今日の1フレーズ",
+      },
+
+      { type: "paragraph", text: "旅行の前でも、イベントの前でも、新しいことを始めるときでも使えます。" },
+      { type: "paragraph", text: "I’m exciting. ではなく、" },
+      { type: "paragraph", text: "I’m excited!" },
+      { type: "paragraph", text: "今日からここだけ、間違えなければOKです。" },
+
+      {
+        type: "keyMessage",
+        text: "ONE MINUTE,\nONE ENGLISH.\n\n今日は、\n\nI’m excited!\n\nこれだけ。",
+      },
+    ],
+    editorNote: [
+      "英語は、一度にたくさん覚えなくても大丈夫です。",
+      "「1分英語」では、1回につき1つだけ。",
+      "読み終わったあとに、英語がひとつ頭に残る。",
+      "そんな小さな英語の時間をお届けします。",
+    ],
+    relatedCategorySlug: "online-eikaiwa",
+    relatedCategoryLabel: "オンライン英会話",
+  },
 ];
 
 export function getColumnBySlug(slug: string): Column | undefined {
@@ -563,5 +656,8 @@ export const seriesInfo: Record<string, { description: string }> = {
   "英語のなぜ？": {
     description:
       "英語の素朴な疑問を、「え、そうなの？」→「なんで？」→「なるほど！」という流れで解き明かす、テンポよく読める連載。",
+  },
+  "1分英語": {
+    description: "1回につき、英語を1つだけ覚えて帰る。1分で読み切れる、いちばん短い連載。",
   },
 };
