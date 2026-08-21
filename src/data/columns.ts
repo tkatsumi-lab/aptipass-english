@@ -568,6 +568,13 @@ export const columns: Column[] = [
     ],
     relatedCategorySlug: "online-eikaiwa",
     relatedCategoryLabel: "オンライン英会話",
+    illustration: {
+      src: "/images/magazine/why-is-i-capitalized-editorial.png",
+      alt: "you、he、she、we、they、itなど小文字の代名詞たちに囲まれて、大文字のIだけが真ん中で堂々と立っているイラスト",
+      width: 1536,
+      height: 1024,
+      placement: "hero",
+    },
   },
   {
     id: "im-exciting-vs-im-excited",
