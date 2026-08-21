@@ -411,6 +411,13 @@ export const columns: Column[] = [
     ],
     relatedCategorySlug: "online-eikaiwa",
     relatedCategoryLabel: "オンライン英会話",
+    illustration: {
+      src: "/images/magazine/yoroshiku-onegaishimasu-english-editorial.png",
+      alt: "オフィスで向き合う男女の会話の上に、お辞儀・書類のやり取り・打ち合わせ・別れ際の挨拶という4つの異なる場面が吹き出しとして描かれ、場面ごとに伝え方が変わることを表したイラスト",
+      width: 1536,
+      height: 1024,
+      placement: "hero",
+    },
   },
   {
     id: "why-is-i-capitalized",
@@ -668,6 +675,13 @@ export const columns: Column[] = [
     ],
     relatedCategorySlug: "online-eikaiwa",
     relatedCategoryLabel: "オンライン英会話",
+    illustration: {
+      src: "/images/magazine/im-exciting-vs-im-excited-editorial.png",
+      alt: "左側に「I'm exciting.」と話す女性と戸惑う子どもたち、右側に「I'm excited.」と喜ぶ女性を並べ、excitingとexcitedで話し手の意味が変わることを対比で示したイラスト",
+      width: 1536,
+      height: 1024,
+      placement: "hero",
+    },
   },
 ];
 
