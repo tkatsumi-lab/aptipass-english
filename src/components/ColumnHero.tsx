@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { formatIssueNumber, seriesInfo, type Column } from "@/data/columns";
+import Link from "next/link";
+import { formatIssueNumber, getSeriesAnchorId, seriesInfo, type Column } from "@/data/columns";
 import { SERIES_ACCENTS } from "@/lib/seriesAccent";
 
 type ColumnHeroProps = {
@@ -63,12 +64,24 @@ export default function ColumnHero({ column }: ColumnHeroProps) {
           heroIllustration ? "max-w-4xl" : "max-w-2xl"
         }`}
       >
-        <p className="text-sm font-bold tracking-[0.28em] text-slate-900 uppercase sm:text-base">
-          AptiPass MAGAZINE
-        </p>
-        <p className={`mt-1 text-[10px] font-medium tracking-[0.35em] uppercase sm:text-[11px] ${a.labelMuted}`}>
-          {presentation.mastheadDescriptor}
-        </p>
+        <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+          <div>
+            <p className="text-sm font-bold tracking-[0.28em] text-slate-900 uppercase sm:text-base">
+              AptiPass MAGAZINE
+            </p>
+            <p className={`mt-1 text-[10px] font-medium tracking-[0.35em] uppercase sm:text-[11px] ${a.labelMuted}`}>
+              {presentation.mastheadDescriptor}
+            </p>
+          </div>
+          <Link
+            href={`/columns#${getSeriesAnchorId(column.series)}`}
+            prefetch={false}
+            className={`inline-flex shrink-0 items-center gap-1 text-xs font-semibold ${a.link} ${a.linkHoverSelf}`}
+          >
+            {column.series} バックナンバー
+            <span aria-hidden="true">→</span>
+          </Link>
+        </div>
 
         <div aria-hidden="true" className={`mt-5 h-px w-12 ${a.ruleBg}`} />
 

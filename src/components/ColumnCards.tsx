@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { formatIssueNumber, getColumnsBySeries, SERIES_NAMES, seriesInfo } from "@/data/columns";
+import { formatIssueNumber, getColumnsBySeries, getSeriesAnchorId, SERIES_NAMES, seriesInfo } from "@/data/columns";
 import { SERIES_ACCENTS } from "@/lib/seriesAccent";
 
 /**
@@ -49,28 +49,38 @@ export default function ColumnCards() {
               if (!latest) return null;
               const a = SERIES_ACCENTS[presentation.accent];
               return (
-                <Link
+                <div
                   key={series}
-                  href={`/columns/${latest.slug}`}
-                  prefetch={false}
-                  className={`group block ${index === 0 ? "" : "border-t border-slate-100 pt-5 sm:border-t-0 sm:pt-0"}`}
+                  className={index === 0 ? "" : "border-t border-slate-100 pt-5 sm:border-t-0 sm:pt-0"}
                 >
-                  <p className={`text-[11px] font-semibold tracking-[0.2em] uppercase ${a.label}`}>
-                    {presentation.tagline}
-                  </p>
-                  <h3 className="mt-1 font-serif text-lg font-bold break-keep text-slate-900">{series}</h3>
-                  <p className="mt-1 text-xs font-semibold tracking-[0.1em] text-slate-400">
-                    {formatIssueNumber(latest.issueNumber)}
-                  </p>
-                  <p className={`mt-2 text-sm leading-snug font-semibold break-keep text-slate-700 ${a.linkHover}`}>
-                    {latest.title}
-                  </p>
-                  <div className="mt-2 text-xs text-slate-400">{latest.readingTimeMinutes} MIN READ</div>
-                  <span className={`mt-3 inline-flex items-center gap-1 text-sm font-semibold ${a.link}`}>
-                    {presentation.ctaLabel}
+                  <Link href={`/columns/${latest.slug}`} prefetch={false} className="group block">
+                    <p className={`text-[11px] font-semibold tracking-[0.2em] uppercase ${a.label}`}>
+                      {presentation.tagline}
+                    </p>
+                    <h3 className="mt-1 font-serif text-lg font-bold break-keep text-slate-900">{series}</h3>
+                    <p className="mt-1 text-xs font-semibold tracking-[0.1em] text-slate-400">
+                      {formatIssueNumber(latest.issueNumber)}
+                    </p>
+                    <p
+                      className={`mt-2 text-sm leading-snug font-semibold break-keep text-slate-700 ${a.linkHover}`}
+                    >
+                      {latest.title}
+                    </p>
+                    <div className="mt-2 text-xs text-slate-400">{latest.readingTimeMinutes} MIN READ</div>
+                    <span className={`mt-3 inline-flex items-center gap-1 text-sm font-semibold ${a.link}`}>
+                      {presentation.ctaLabel}
+                      <span aria-hidden="true">→</span>
+                    </span>
+                  </Link>
+                  <Link
+                    href={`/columns#${getSeriesAnchorId(series)}`}
+                    prefetch={false}
+                    className="mt-2 inline-flex items-center gap-1 text-xs text-slate-400 underline decoration-slate-300 underline-offset-2 hover:text-slate-600"
+                  >
+                    {series}のバックナンバー
                     <span aria-hidden="true">→</span>
-                  </span>
-                </Link>
+                  </Link>
+                </div>
               );
             })}
           </div>
