@@ -95,7 +95,7 @@ export type Column = {
   slug: string;
   /** One of seriesInfo's keys — 英語コラム / 英語のなぜ？ / 1分英語. */
   series: string;
-  /** "ISSUE 001" — per-series issue number, not a global article count. */
+  /** Per-series issue number (displayed as "#001" via formatIssueNumber), not a global article count. */
   issueNumber: number;
   readingTimeMinutes: number;
   title: string;
@@ -851,9 +851,14 @@ export function getColumnBySlug(slug: string): Column | undefined {
   return columns.find((c) => c.slug === slug);
 }
 
-/** "ISSUE 001" padding, shared by every page that shows an issue number. */
+/**
+ * "#001" — the reader-facing issue number, shared by every page that shows
+ * one. `issueNumber` itself stays a plain number (internal Issue System);
+ * this is the only place the "#00N" display format is defined, so it never
+ * gets hand-rolled at a call site.
+ */
 export function formatIssueNumber(issueNumber: number): string {
-  return String(issueNumber).padStart(3, "0");
+  return `#${String(issueNumber).padStart(3, "0")}`;
 }
 
 /**
@@ -868,6 +873,23 @@ export function getColumnsBySeries(series: string): Column[] {
   return columns
     .filter((c) => c.series === series)
     .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+}
+
+/**
+ * Stable per-series anchor id (e.g. "why") for /columns' series sections —
+ * lets an article detail page link back to its own series' section
+ * (`/columns#why`) without a dedicated per-series URL. Deliberately not part
+ * of `seriesInfo`/`SeriesPresentation`: this is Hub-page routing, not a
+ * presentation lever, so it stays a separate lookup.
+ */
+const SERIES_ANCHOR_IDS: Record<string, string> = {
+  英語コラム: "column",
+  "英語のなぜ？": "why",
+  "1分英語": "one-minute",
+};
+
+export function getSeriesAnchorId(series: string): string {
+  return SERIES_ANCHOR_IDS[series] ?? series;
 }
 
 /**

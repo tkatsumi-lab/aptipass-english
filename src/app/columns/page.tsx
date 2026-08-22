@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import JsonLd from "@/components/JsonLd";
-import { formatIssueNumber, getColumnsBySeries, SERIES_NAMES, seriesInfo } from "@/data/columns";
+import { formatIssueNumber, getColumnsBySeries, getSeriesAnchorId, SERIES_NAMES, seriesInfo } from "@/data/columns";
 import { SERIES_ACCENTS } from "@/lib/seriesAccent";
 import { buildItemListJsonLd, buildMetadata } from "@/lib/seo";
 
@@ -17,26 +17,33 @@ export const metadata: Metadata = buildMetadata({
 
 /**
  * AptiPass MAGAZINE's Editorial Hub — not a single feed. 英語コラム /
- * 英語のなぜ？ / 1分英語 are 3 independent series, each with its own
- * ISSUE numbering (see docs/architecture.md-style reasoning in
- * src/data/columns.ts), so this page never merges them into one
- * cross-series "latest/back issues" list. It shows each series' own
- * latest issue as an entry point; per-series back-issue archives are a
- * later addition (see SERIES_NAMES/getColumnsBySeries — the data already
- * supports it).
+ * 英語のなぜ？ / 1分英語 are 3 independent series, each with its own Issue
+ * System (see docs/architecture.md-style reasoning in src/data/columns.ts),
+ * so this page never merges them into one cross-series "latest/back
+ * issues" list. Each series shows its own LATEST issue as the primary
+ * entry point, with any older issues in that same series listed below as
+ * a quieter BACK ISSUES index — omitted entirely for a series with only
+ * one issue so far. Reads `getColumnsBySeries(series)` once per series and
+ * splits `[latest, ...backIssues]`, so a series' 2nd/3rd/… article just
+ * becomes that series' new latest, with the previous latest sliding
+ * automatically into BACK ISSUES — no page code changes needed.
  *
  * Sized with decreasing visual weight in `SERIES_NAMES` order (英語コラム
  * largest, 1分英語 most compact) so the 3 entries read as a rhythm, not 3
  * identical cards — while every entry shares the same shape (tagline →
- * series name → description → LATEST → CTA), so it still reads as one
- * magazine rather than 3 unrelated sites.
+ * series name → description → LATEST → BACK ISSUES → CTA), so it still
+ * reads as one magazine rather than 3 unrelated sites.
  */
 export default function ColumnsPage() {
-  const entries = SERIES_NAMES.map((series) => ({
-    series,
-    presentation: seriesInfo[series],
-    latest: getColumnsBySeries(series)[0],
-  })).filter((entry) => entry.latest);
+  const entries = SERIES_NAMES.map((series) => {
+    const [latest, ...backIssues] = getColumnsBySeries(series);
+    return {
+      series,
+      presentation: seriesInfo[series],
+      latest,
+      backIssues,
+    };
+  }).filter((entry) => entry.latest);
 
   return (
     <>
@@ -65,7 +72,7 @@ export default function ColumnsPage() {
 
       <section className="mx-auto max-w-3xl px-4 pb-20 sm:px-6">
         {entries.map((entry, index) => {
-          const { series, presentation, latest } = entry;
+          const { series, presentation, latest, backIssues } = entry;
           if (!latest) return null;
           const a = SERIES_ACCENTS[presentation.accent];
           const nameSize =
@@ -75,7 +82,8 @@ export default function ColumnsPage() {
           return (
             <div
               key={series}
-              className={index === 0 ? "" : "mt-14 border-t border-slate-100 pt-14 sm:mt-16 sm:pt-16"}
+              id={getSeriesAnchorId(series)}
+              className={`scroll-mt-24 ${index === 0 ? "" : "mt-14 border-t border-slate-100 pt-14 sm:mt-16 sm:pt-16"}`}
             >
               <p className={`text-[11px] font-semibold tracking-[0.2em] uppercase ${a.label}`}>
                 {presentation.tagline}
@@ -91,7 +99,7 @@ export default function ColumnsPage() {
                   <span aria-hidden="true" className="text-slate-300">
                     /
                   </span>
-                  <span>ISSUE {formatIssueNumber(latest.issueNumber)}</span>
+                  <span>{formatIssueNumber(latest.issueNumber)}</span>
                   <span aria-hidden="true" className="text-slate-300">
                     /
                   </span>
@@ -107,6 +115,42 @@ export default function ColumnsPage() {
                   <span aria-hidden="true">→</span>
                 </span>
               </Link>
+
+              {backIssues.length > 0 && (
+                <div className="mt-8 border-t border-slate-100 pt-6">
+                  <p className="text-[11px] font-semibold tracking-[0.2em] text-slate-400 uppercase">
+                    Back Issues
+                  </p>
+                  <ul className="mt-3 divide-y divide-slate-100">
+                    {backIssues.map((issue) => (
+                      <li key={issue.slug}>
+                        <Link
+                          href={`/columns/${issue.slug}`}
+                          prefetch={false}
+                          className="group flex items-start justify-between gap-4 py-3"
+                        >
+                          <span className="min-w-0">
+                            <span className={`text-xs font-semibold tracking-[0.1em] ${a.labelMuted}`}>
+                              {formatIssueNumber(issue.issueNumber)}
+                            </span>
+                            <span
+                              className={`mt-0.5 block text-sm leading-snug font-semibold break-keep text-slate-700 ${a.linkHover}`}
+                            >
+                              {issue.title}
+                            </span>
+                            <span className="mt-0.5 block text-xs text-slate-400">
+                              {issue.readingTimeMinutes} MIN READ
+                            </span>
+                          </span>
+                          <span aria-hidden="true" className={`mt-1 shrink-0 text-sm ${a.link}`}>
+                            →
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           );
         })}

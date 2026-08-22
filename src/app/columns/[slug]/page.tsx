@@ -6,7 +6,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import ColumnBody from "@/components/ColumnBody";
 import ColumnHero from "@/components/ColumnHero";
 import JsonLd from "@/components/JsonLd";
-import { columns, getColumnBySlug, seriesInfo } from "@/data/columns";
+import { columns, getColumnBySlug, getSeriesAnchorId, seriesInfo } from "@/data/columns";
 import { SERIES_ACCENTS } from "@/lib/seriesAccent";
 import { buildArticleJsonLd, buildMetadata } from "@/lib/seo";
 
@@ -102,6 +102,24 @@ export default async function ColumnDetailPage({ params }: Props) {
             className={`font-semibold ${a.link} ${a.linkHoverSelf}`}
           >
             {column.relatedCategoryLabel}を見てみる
+            <span aria-hidden="true">→</span>
+          </Link>
+        </p>
+
+        {/* Back to this series' section on the Hub, and to the Hub itself — no dedicated per-series URL, just an anchor on /columns. */}
+        <p className="mt-3 text-sm text-slate-500">
+          <Link
+            href={`/columns#${getSeriesAnchorId(column.series)}`}
+            prefetch={false}
+            className={`font-semibold ${a.link} ${a.linkHoverSelf}`}
+          >
+            {column.series}の記事一覧へ
+            <span aria-hidden="true">→</span>
+          </Link>
+        </p>
+        <p className="mt-3 text-sm text-slate-500">
+          <Link href="/columns" prefetch={false} className={`font-semibold ${a.link} ${a.linkHoverSelf}`}>
+            AptiPass MAGAZINEへ戻る
             <span aria-hidden="true">→</span>
           </Link>
         </p>

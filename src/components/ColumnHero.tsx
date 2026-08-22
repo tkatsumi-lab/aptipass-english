@@ -39,7 +39,7 @@ export default function ColumnHero({ column }: ColumnHeroProps) {
 
   const metaItems = (
     <>
-      <span>ISSUE {formatIssueNumber(column.issueNumber)}</span>
+      <span>{formatIssueNumber(column.issueNumber)}</span>
       <span aria-hidden="true" className="text-slate-300">
         /
       </span>
@@ -87,7 +87,7 @@ export default function ColumnHero({ column }: ColumnHeroProps) {
               <span aria-hidden="true" className="text-slate-300">
                 /
               </span>
-              <span>ISSUE {formatIssueNumber(column.issueNumber)}</span>
+              <span>{formatIssueNumber(column.issueNumber)}</span>
             </>
           ) : (
             metaItems

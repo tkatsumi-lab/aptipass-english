@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getColumnsBySeries, SERIES_NAMES, seriesInfo } from "@/data/columns";
+import { formatIssueNumber, getColumnsBySeries, SERIES_NAMES, seriesInfo } from "@/data/columns";
 import { SERIES_ACCENTS } from "@/lib/seriesAccent";
 
 /**
@@ -59,7 +59,10 @@ export default function ColumnCards() {
                     {presentation.tagline}
                   </p>
                   <h3 className="mt-1 font-serif text-lg font-bold break-keep text-slate-900">{series}</h3>
-                  <p className={`mt-3 text-sm leading-snug font-semibold break-keep text-slate-700 ${a.linkHover}`}>
+                  <p className="mt-1 text-xs font-semibold tracking-[0.1em] text-slate-400">
+                    {formatIssueNumber(latest.issueNumber)}
+                  </p>
+                  <p className={`mt-2 text-sm leading-snug font-semibold break-keep text-slate-700 ${a.linkHover}`}>
                     {latest.title}
                   </p>
                   <div className="mt-2 text-xs text-slate-400">{latest.readingTimeMinutes} MIN READ</div>
