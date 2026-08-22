@@ -18,11 +18,14 @@ type ColumnHeroProps = {
  *
  * `column.illustration` (optional — see ColumnIllustration in
  * src/data/columns.ts) is the other data-driven switch here: when a
- * `placement: "hero"` (or unset) illustration exists, title+subtitle share
- * the row with it in a ~58/42 Editorial Feature Layout on desktop, stacked
- * title → subtitle → illustration on mobile. With no illustration — every
- * article today except one — the Hero renders exactly as it always has,
- * at the narrower single-column width. Nothing here checks a slug.
+ * `placement: "hero"` (or unset) illustration exists, it runs full-width
+ * beneath title+subtitle as a magazine feature-spread "扉絵" (title, then a
+ * large illustration, then the body) — never a side-by-side thumbnail, on
+ * either PC or mobile. The Hero widens to fit it (max-w-6xl vs max-w-2xl)
+ * while title/subtitle keep their own narrower reading width (max-w-3xl).
+ * With no illustration — most articles — the Hero renders exactly as it
+ * always has, at the narrower single-column width. Nothing here checks a
+ * slug.
  */
 export default function ColumnHero({ column }: ColumnHeroProps) {
   const presentation = seriesInfo[column.series];
@@ -49,7 +52,7 @@ export default function ColumnHero({ column }: ColumnHeroProps) {
   );
 
   const titleBlock = (
-    <div>
+    <div className={heroIllustration ? "max-w-3xl" : undefined}>
       <h1 className="text-balance break-keep font-serif text-3xl leading-[1.3] font-bold tracking-tight text-slate-900 sm:text-5xl sm:leading-[1.25]">
         {column.title}
       </h1>
@@ -61,7 +64,7 @@ export default function ColumnHero({ column }: ColumnHeroProps) {
     <div className={wash}>
       <div
         className={`mx-auto px-4 sm:px-6 ${compact ? "pt-10 pb-5 sm:pt-12" : "pt-12 pb-6 sm:pt-16"} ${
-          heroIllustration ? "max-w-4xl" : "max-w-2xl"
+          heroIllustration ? "max-w-6xl" : "max-w-2xl"
         }`}
       >
         <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
@@ -111,26 +114,21 @@ export default function ColumnHero({ column }: ColumnHeroProps) {
           <span className={a.label}>{column.series}</span>
         </div>
 
-        {heroIllustration ? (
-          <div className="mt-6 flex flex-col gap-8 sm:flex-row sm:items-center sm:gap-10">
-            <div className="sm:w-[58%]">{titleBlock}</div>
-            <div className="sm:w-[42%]">
-              <Image
-                src={heroIllustration.src}
-                alt={heroIllustration.alt}
-                width={heroIllustration.width}
-                height={heroIllustration.height}
-                sizes="(min-width: 640px) 42vw, 100vw"
-                className="h-auto w-full"
-                priority
-              />
-              {heroIllustration.caption && (
-                <p className="mt-2 text-xs text-slate-400">{heroIllustration.caption}</p>
-              )}
-            </div>
+        <div className="mt-6">{titleBlock}</div>
+
+        {heroIllustration && (
+          <div className={compact ? "mt-6" : "mt-10 sm:mt-12"}>
+            <Image
+              src={heroIllustration.src}
+              alt={heroIllustration.alt}
+              width={heroIllustration.width}
+              height={heroIllustration.height}
+              sizes="(min-width: 1024px) 1100px, (min-width: 640px) 90vw, 100vw"
+              className="h-auto w-full"
+              priority
+            />
+            {heroIllustration.caption && <p className="mt-2 text-xs text-slate-400">{heroIllustration.caption}</p>}
           </div>
-        ) : (
-          <div className="mt-6">{titleBlock}</div>
         )}
       </div>
     </div>
