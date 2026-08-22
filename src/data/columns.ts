@@ -420,6 +420,371 @@ export const columns: Column[] = [
     },
   },
   {
+    id: "daijoubu-desu-english",
+    slug: "daijoubu-desu-english",
+    series: "英語コラム",
+    issueNumber: 2,
+    readingTimeMinutes: 6,
+    title: "「大丈夫です」は英語で何と言えばいい？",
+    subtitle: "YESにもNOにもなる、日本語の不思議。",
+    emoji: "👌",
+    // Later than #001's bare "2026-08-21" date, and safely in the past
+    // relative to real time, so this issue sorts as 英語コラム's latest.
+    publishedAt: "2026-08-22T18:00:00+09:00",
+    seoTitle: "「大丈夫です」は英語で何て言う？YESにもNOにもなる理由を解説",
+    seoDescription:
+      "「大丈夫です」は場面によってYESにもNOにもなる不思議な日本語。コーヒーを勧められて断るときのNo, thank you.から、予定を聞かれて答えるThat works for me.まで、伝えたい意味から英語表現を選ぶコツをわかりやすく解説します。",
+    teaser: "「大丈夫です」、その一言でYESもNOも伝わるって、不思議だと思いませんか？",
+    body: [
+      { type: "paragraph", text: "「大丈夫です。」" },
+      { type: "paragraph", text: "日本語では、毎日のように使う言葉です。" },
+      { type: "paragraph", text: "体調を聞かれたとき。" },
+      { type: "paragraph", text: "何かを勧められたとき。" },
+      { type: "paragraph", text: "予定を確認されたとき。" },
+      { type: "paragraph", text: "心配されたとき。" },
+      { type: "paragraph", text: "とても便利な言葉ですよね。" },
+      { type: "paragraph", text: "でも、この「大丈夫です」。" },
+      { type: "paragraph", text: "英語にしようとすると、少し困ったことが起こります。" },
+
+      { type: "keyMessage", text: "「大丈夫です」は、\nYESにもNOにもなる。" },
+
+      { type: "paragraph", text: "たとえば、コンビニで店員さんにこう聞かれたとします。" },
+      { type: "question", text: "「袋はご利用になりますか？」" },
+      { type: "paragraph", text: "そこで、" },
+      { type: "question", text: "「大丈夫です。」" },
+      { type: "paragraph", text: "と答えたら、多くの場合は、" },
+      { type: "question", text: "「いりません。」" },
+      { type: "paragraph", text: "という意味になります。" },
+      { type: "paragraph", text: "つまり、NOです。" },
+
+      { type: "paragraph", text: "ところが、友人から、" },
+      { type: "question", text: "「明日の10時で大丈夫？」" },
+      { type: "paragraph", text: "と聞かれて、" },
+      { type: "question", text: "「大丈夫！」" },
+      { type: "paragraph", text: "と答えたらどうでしょう。" },
+      { type: "paragraph", text: "今度は、" },
+      { type: "question", text: "「うん、それでいいよ。」" },
+      { type: "paragraph", text: "という意味です。" },
+      { type: "paragraph", text: "つまり、YESです。" },
+
+      { type: "englishDisplay", en: "大丈夫です。\n\nYES？\nNO？" },
+
+      { type: "paragraph", text: "同じ「大丈夫」。" },
+      {
+        type: "paragraph",
+        text: "同じ言葉なのに、ある場面ではYESになり、別の場面ではNOになる。",
+      },
+      { type: "paragraph", text: "英語を勉強していると、" },
+      { type: "question", text: "「じゃあ『大丈夫です』って、英語で何て言えばいいの？」" },
+      { type: "paragraph", text: "と思うかもしれません。" },
+      { type: "paragraph", text: "そこでよく出てくるのが、" },
+      { type: "paragraph", text: "“I’m fine.”" },
+      { type: "paragraph", text: "です。" },
+
+      { type: "heading", text: "「大丈夫です」＝ “I’m fine.” ではない" },
+      { type: "paragraph", text: "学校の英語では、" },
+      { type: "paragraph", text: "How are you?" },
+      { type: "paragraph", text: "I’m fine, thank you." },
+      { type: "paragraph", text: "という会話を習った人も多いと思います。" },
+      { type: "paragraph", text: "そのため、" },
+      { type: "paragraph", text: "「大丈夫」＝ fine" },
+      { type: "paragraph", text: "というイメージを持っている人も少なくありません。" },
+      { type: "paragraph", text: "もちろん、“I’m fine.” が自然な場面はあります。" },
+
+      { type: "example", en: "Are you okay? — I’m fine.", ja: "大丈夫？ — 大丈夫だよ。" },
+
+      { type: "paragraph", text: "これは自然です。" },
+      { type: "paragraph", text: "ところが、日本語の「大丈夫です」が出てくる場面すべてで、" },
+      { type: "paragraph", text: "“I’m fine.”" },
+      { type: "paragraph", text: "と言えるわけではありません。" },
+
+      { type: "example", en: "Would you like some coffee?", ja: "コーヒーはいかがですか？" },
+      { type: "paragraph", text: "ここで「大丈夫です」と断りたいとき、" },
+      { type: "question", text: "“I’m fine.” と言えばよいのでしょうか？" },
+
+      { type: "paragraph", text: "会話によっては通じることもあります。" },
+      { type: "paragraph", text: "でも、英語としてもっと分かりやすく伝えるなら、" },
+      { type: "paragraph", text: "“No, thank you.”" },
+      { type: "paragraph", text: "のように答えた方が自然です。" },
+
+      {
+        type: "example",
+        en: "Would you like some coffee? — No, thank you.",
+        ja: "コーヒーはいかがですか？ — 大丈夫です。／結構です。",
+      },
+
+      {
+        type: "paragraph",
+        text: "日本語では「大丈夫です」で済んでいたところを、英語では、",
+      },
+      { type: "question", text: "「いらない」" },
+      { type: "paragraph", text: "という意思に変換しています。" },
+      { type: "paragraph", text: "ここが大切なところです。" },
+
+      {
+        type: "keyMessage",
+        text: "「大丈夫です」を英語にするのではなく、\n「何を伝えたいのか」を英語にする。",
+      },
+
+      { type: "heading", text: "なぜ日本語では、YESとNOを同じ言葉で言えるのか" },
+      { type: "paragraph", text: "少し不思議ですよね。" },
+      {
+        type: "paragraph",
+        text: "「大丈夫」という言葉そのものを考えてみると、本来は、",
+      },
+      { type: "paragraph", text: "「問題がない」「心配がない」「差し支えない」" },
+      { type: "paragraph", text: "といった状態を表しています。" },
+      { type: "paragraph", text: "だから、" },
+      { type: "question", text: "「明日の10時で大丈夫？」" },
+      { type: "paragraph", text: "に対する" },
+      { type: "question", text: "「大丈夫です」" },
+      { type: "paragraph", text: "は、" },
+      { type: "question", text: "「その時間で問題ありません。」" },
+      { type: "paragraph", text: "という意味になります。" },
+      { type: "paragraph", text: "結果としてYESになります。" },
+
+      {
+        type: "example",
+        en: "Does 10 a.m. work for you? — Yes, that works.",
+        ja: "10時で大丈夫？ — はい、大丈夫です。",
+      },
+
+      { type: "paragraph", text: "一方で、" },
+      { type: "question", text: "「お手伝いしましょうか？」" },
+      { type: "paragraph", text: "に対して、" },
+      { type: "question", text: "「大丈夫です。」" },
+      { type: "paragraph", text: "と言った場合。" },
+      { type: "paragraph", text: "これは、" },
+      { type: "question", text: "「手伝ってもらわなくても問題ありません。」" },
+      { type: "paragraph", text: "という意味になります。" },
+      { type: "paragraph", text: "だから、結果としてNOになるのです。" },
+
+      {
+        type: "example",
+        en: "Do you need any help? — No, I’m okay. Thanks.",
+        ja: "お手伝いしましょうか？ — 大丈夫です。ありがとう。",
+      },
+
+      {
+        type: "paragraph",
+        text: "つまり、日本語の「大丈夫です」は、YESとNOを直接表しているわけではありません。",
+      },
+      { type: "question", text: "「今の状態で問題ない」" },
+      { type: "paragraph", text: "と言っているだけなのです。" },
+      {
+        type: "paragraph",
+        text: "その結果が、場面によってYESになったりNOになったりします。",
+      },
+
+      {
+        type: "englishDisplay",
+        en: "「大丈夫です」\n\n＝ YES / NO\nではなく、\n\n＝「この状態で問題ない」",
+      },
+
+      {
+        type: "paragraph",
+        text: "こう考えると、さっきまで不思議だった「大丈夫」が、少し違って見えてきませんか？",
+      },
+
+      { type: "heading", text: "英語では「大丈夫」を分解して考える" },
+      { type: "paragraph", text: "では実際に英語を話すときは、どうすればいいのでしょう。" },
+      { type: "paragraph", text: "「大丈夫です」に対応する英単語を探す必要はありません。" },
+      { type: "paragraph", text: "代わりに、" },
+      { type: "question", text: "「この大丈夫は、何を意味しているんだろう？」" },
+      { type: "paragraph", text: "と考えてみます。" },
+
+      { type: "paragraph", text: "たとえば、" },
+      { type: "question", text: "「体調は大丈夫？」" },
+      { type: "paragraph", text: "なら、" },
+      { type: "question", text: "「私は問題ない」" },
+      { type: "paragraph", text: "なので、" },
+
+      { type: "example", en: "I’m okay. / I’m fine.", ja: "大丈夫だよ。" },
+
+      { type: "question", text: "「この予定で大丈夫？」" },
+      { type: "paragraph", text: "なら、" },
+      { type: "question", text: "「その予定で問題ない」" },
+      { type: "paragraph", text: "なので、" },
+
+      { type: "example", en: "That works for me.", ja: "それで大丈夫です。" },
+
+      { type: "paragraph", text: "何かを勧められて、" },
+      { type: "question", text: "「大丈夫です。」" },
+      { type: "paragraph", text: "と断るなら、" },
+      { type: "question", text: "「必要ありません」" },
+      { type: "paragraph", text: "なので、" },
+
+      { type: "example", en: "No, thank you.", ja: "大丈夫です。／結構です。" },
+
+      { type: "question", text: "「心配しなくて大丈夫だよ」" },
+      { type: "paragraph", text: "なら、" },
+      { type: "question", text: "「心配しなくていい」" },
+      { type: "paragraph", text: "なので、" },
+
+      { type: "example", en: "Don’t worry.", ja: "大丈夫だよ。／心配しないで。" },
+
+      { type: "paragraph", text: "そして、" },
+      { type: "question", text: "「一人で大丈夫？」" },
+      { type: "paragraph", text: "に対して、" },
+      { type: "question", text: "「うん、大丈夫。」" },
+      { type: "paragraph", text: "なら、" },
+
+      { type: "example", en: "I’ll be okay.", ja: "うん、大丈夫だよ。" },
+
+      { type: "paragraph", text: "こうして並べてみると、" },
+      {
+        type: "paragraph",
+        text: "日本語では全部「大丈夫」で言えてしまうことを、英語では別々の言葉で表しているのが分かります。",
+      },
+
+      { type: "heading", text: "英語が細かいのではなく、日本語が省略している" },
+      { type: "paragraph", text: "ここで、" },
+      { type: "question", text: "「英語って面倒だな。」" },
+      { type: "paragraph", text: "と思うかもしれません。" },
+      {
+        type: "paragraph",
+        text: "日本語なら「大丈夫です」の一言なのに、英語では場面ごとに表現を変えなければならない。",
+      },
+      { type: "paragraph", text: "でも、少し見方を変えてみましょう。" },
+      { type: "paragraph", text: "英語が細かすぎるのではなく、" },
+      {
+        type: "paragraph",
+        text: "日本語がたくさんの情報を、「大丈夫」という一言の中に預けている",
+      },
+      { type: "paragraph", text: "とも考えられます。" },
+
+      { type: "paragraph", text: "私たちは、" },
+      { type: "paragraph", text: "相手が何を聞いたのか。" },
+      { type: "paragraph", text: "どんな状況なのか。" },
+      { type: "paragraph", text: "どんな表情で言ったのか。" },
+      { type: "paragraph", text: "その前にどんな会話をしていたのか。" },
+      { type: "paragraph", text: "そうした情報を無意識に読み取って、" },
+      { type: "question", text: "「この『大丈夫』はYESだな」" },
+      { type: "question", text: "「これは断っているな」" },
+      { type: "paragraph", text: "と判断しています。" },
+
+      { type: "paragraph", text: "だから日本語を母語としている私たちは、ほとんど迷いません。" },
+      {
+        type: "paragraph",
+        text: "ところが、その言葉だけを英語へ移そうとすると、急に難しくなる。",
+      },
+      {
+        type: "paragraph",
+        text: "英語には、日本語の「大丈夫」とまったく同じ範囲を一語で覆ってくれる便利な言葉がないからです。",
+      },
+
+      {
+        type: "keyMessage",
+        text: "翻訳できないのではなく、\n日本語では言葉にしていなかった情報を、\n英語では言葉にする必要がある。",
+      },
+
+      { type: "heading", text: "これは「大丈夫」だけの話ではない" },
+      { type: "paragraph", text: "実は、この現象は「大丈夫です」だけではありません。" },
+      { type: "paragraph", text: "以前このコラムで取り上げた、" },
+      { type: "question", text: "「よろしくお願いします」" },
+      { type: "paragraph", text: "もよく似ています。" },
+      {
+        type: "paragraph",
+        text: "日本語では一つの表現を、初対面でも、仕事の依頼でも、メールの最後でも使えます。",
+      },
+      {
+        type: "paragraph",
+        text: "でも英語では、その場面で何を伝えたいのかによって表現が変わります。",
+      },
+
+      { type: "question", text: "「お疲れさまです」" },
+      { type: "question", text: "「すみません」" },
+      { type: "question", text: "「ちょっと……」" },
+      { type: "paragraph", text: "こうした日本語も同じです。" },
+      {
+        type: "paragraph",
+        text: "日本語では、言葉そのものだけではなく、場面や関係性まで含めて意味が完成します。",
+      },
+      { type: "paragraph", text: "だから英語を話すとき、" },
+      { type: "question", text: "「この日本語は英語で何と言う？」" },
+      {
+        type: "paragraph",
+        text: "だけを考えていると、なかなか答えが見つからないことがあります。",
+      },
+
+      { type: "heading", text: "日本語を一度、意味に戻してみる" },
+      { type: "paragraph", text: "そんなときは、日本語をそのまま英語へ運ぼうとせず、" },
+      { type: "paragraph", text: "一度、日本語を「意味」に戻してみてください。" },
+      { type: "paragraph", text: "たとえば、" },
+      { type: "question", text: "「大丈夫です。」" },
+      { type: "paragraph", text: "ではなく、" },
+      { type: "question", text: "「いりません、ありがとう。」" },
+      { type: "question", text: "「その時間で問題ありません。」" },
+      { type: "question", text: "「私は平気です。」" },
+      { type: "question", text: "「心配しなくていいよ。」" },
+      { type: "question", text: "「一人でも問題ないよ。」" },
+      { type: "paragraph", text: "そこまで考えれば、英語はずっと選びやすくなります。" },
+
+      {
+        type: "englishDisplay",
+        en: "日本語\n↓\n英単語\n\nではなく、\n\n日本語\n↓\n伝えたい意味\n↓\n英語",
+      },
+
+      {
+        type: "paragraph",
+        text: "英語を話すというと、日本語に対応する英単語を素早く思い出すことだと考えてしまいがちです。",
+      },
+      { type: "paragraph", text: "でも、本当は少し違うのかもしれません。" },
+      { type: "paragraph", text: "言葉ではなく、意味を渡す。" },
+      { type: "paragraph", text: "その感覚が身についてくると、" },
+      { type: "question", text: "「この日本語、英語で何て言うんだろう？」" },
+      { type: "paragraph", text: "という悩みは少しずつ減っていきます。" },
+
+      {
+        type: "keyMessage",
+        text: "英語にするのは、\n日本語の「言葉」ではなく、\nそのとき自分が伝えたい「意味」。",
+      },
+
+      { type: "paragraph", text: "次に誰かが、" },
+      { type: "question", text: "「大丈夫？」" },
+      { type: "paragraph", text: "と聞いてきたら、少しだけ考えてみてください。" },
+      { type: "paragraph", text: "今の「大丈夫」は、" },
+      { type: "paragraph", text: "YESでしょうか。" },
+      { type: "paragraph", text: "NOでしょうか。" },
+      { type: "paragraph", text: "それとも、" },
+      { type: "question", text: "「心配しないで」" },
+      { type: "paragraph", text: "でしょうか。" },
+
+      {
+        type: "paragraph",
+        text: "私たちは毎日、たった一つの「大丈夫」という言葉で、思っている以上にたくさんのことを伝えています。",
+      },
+      {
+        type: "paragraph",
+        text: "英語を知ることは、英語の単語を増やすことだけではありません。",
+      },
+      {
+        type: "paragraph",
+        text: "普段何気なく使っている日本語を、もう一度見つめ直すことでもあります。",
+      },
+
+      {
+        type: "keyMessage",
+        text: "英語を知ると、\nいつもの日本語が、\n少し不思議に見えてくる。",
+      },
+    ],
+    editorNote: [
+      "「大丈夫です」のように、普段なにげなく使っている言葉ほど、英語にしようとすると立ち止まってしまうことがあります。",
+      "それは英語力が足りないからではなく、日本語がその一言に、たくさんの意味を預けているからかもしれません。",
+      "AptiPass Englishでは、単語やフレーズの「正解」を紹介するだけでなく、「なぜ、そうなるんだろう？」というところまで一緒に考えていきます。",
+      "英語が少し分かる。そして、日本語のこともちょっと面白くなる。そんなコラムをお届けしていきます。",
+    ],
+    relatedCategorySlug: "online-eikaiwa",
+    relatedCategoryLabel: "オンライン英会話",
+    illustration: {
+      src: "/images/magazine/daijoubu-desu-english-editorial.png",
+      alt: "「大丈夫です」と答える場面が、NOのとき（袋は大丈夫です→No, thank you.）とYESのとき（明日10時で大丈夫→That works for me.）で意味が変わることを、考え込む女性のイラストとともに示した図解",
+      width: 1535,
+      height: 1024,
+      placement: "hero",
+    },
+  },
+  {
     id: "why-is-i-capitalized",
     slug: "why-is-i-capitalized",
     series: "英語のなぜ？",
