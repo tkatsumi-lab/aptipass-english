@@ -737,6 +737,13 @@ export const columns: Column[] = [
     ],
     relatedCategorySlug: "online-eikaiwa",
     relatedCategoryLabel: "オンライン英会話",
+    illustration: {
+      src: "/images/magazine/a-an-sound-rule-editorial.png",
+      alt: "擬人化されたHとUの文字、時計、大学の建物とともに、考え込む女の子が「an hour」と「a university」それぞれの最初の音を聞き比べ、母音か子音かでaとanを使い分ける様子を描いたイラスト",
+      width: 1536,
+      height: 1024,
+      placement: "hero",
+    },
   },
   {
     id: "im-exciting-vs-im-excited",
