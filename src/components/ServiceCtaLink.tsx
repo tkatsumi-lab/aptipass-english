@@ -29,6 +29,7 @@ export default function ServiceCtaLink({ service, primaryCategory }: ServiceCtaL
         href={cta.url}
         target="_blank"
         rel={cta.rel}
+        referrerPolicy={cta.referrerPolicy ?? undefined}
         onClick={handleClick}
         className={`inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-105 ${primaryCategory.gradient}`}
       >

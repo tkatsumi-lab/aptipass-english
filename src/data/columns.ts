@@ -1210,6 +1210,112 @@ export const columns: Column[] = [
       placement: "hero",
     },
   },
+  {
+    id: "i-know-vs-i-see",
+    slug: "i-know-vs-i-see",
+    series: "1分英語",
+    issueNumber: 2,
+    readingTimeMinutes: 1,
+    title: "「I know.」と「I see.」は、どう違う？",
+    subtitle: "「知ってる」と「なるほど」。日本語ではどちらも「わかった」でも、英語では少し違います。",
+    emoji: "💡",
+    // Later than #001's 2026-08-21T20:30:00+09:00 so this issue sorts as
+    // 1分英語's latest via getColumnsBySeries.
+    publishedAt: "2026-08-22T20:00:00+09:00",
+    seoTitle: "I knowとI seeの違いは？「わかった」の自然な英語を1分で解説",
+    seoDescription:
+      "I know.とI see.は何が違う？「知ってる」と「なるほど」のニュアンスを、Got it.との違いも含めて1分でわかりやすく解説します。",
+    teaser: "「わかった」のつもりでI know.と言うと、少し違うニュアンスになることも。1分でI see.との違いを確認しましょう。",
+    body: [
+      { type: "paragraph", text: "英語で説明を聞いたあと、" },
+      { type: "question", text: "「わかった。」" },
+      { type: "paragraph", text: "と言いたいとき。" },
+      { type: "paragraph", text: "つい、" },
+      { type: "paragraph", text: "I know." },
+      { type: "paragraph", text: "と言いたくなることはありませんか？" },
+
+      { type: "example", en: "A: The meeting starts at ten.", ja: "会議は10時からだよ。" },
+      { type: "paragraph", text: "B: I know." },
+      { type: "question", text: "さて、この I know. はどんな意味でしょう？" },
+
+      { type: "paragraph", text: "I know. は、" },
+      { type: "question", text: "「わかった。」" },
+      { type: "paragraph", text: "というより、" },
+      { type: "paragraph", text: "「知っています。」「もう知ってるよ。」" },
+      { type: "paragraph", text: "に近い表現です。" },
+
+      { type: "englishDisplay", en: "I know.", ja: "もう知っています。" },
+
+      { type: "paragraph", text: "そのため、言い方によっては、" },
+      { type: "question", text: "「それくらい知ってるよ。」" },
+      { type: "paragraph", text: "のように少し強く聞こえることもあります。" },
+
+      { type: "heading", text: "今聞いて「なるほど」なら I see." },
+
+      { type: "paragraph", text: "では、相手の説明を聞いて、" },
+      { type: "paragraph", text: "「なるほど。」「そういうことか。」" },
+      { type: "paragraph", text: "と理解したときはどうでしょう。" },
+
+      { type: "example", en: "A: You need to click here first.", ja: "まずここをクリックするんだよ。" },
+      { type: "example", en: "B: I see.", ja: "なるほど。" },
+
+      { type: "paragraph", text: "この I see. は、" },
+      { type: "question", text: "「今、理解しました。」" },
+      { type: "paragraph", text: "という感覚です。" },
+
+      { type: "englishDisplay", en: "I see.", ja: "なるほど。／そういうことか。" },
+
+      { type: "insight", text: "I know. → すでに知っている。I see. → 今、理解した。" },
+
+      { type: "paragraph", text: "時間の違いで考えると、覚えやすいです。" },
+
+      {
+        type: "keyMessage",
+        text: "I KNOW\n＝ ALREADY KNEW\n\nI SEE\n＝ NOW I UNDERSTAND",
+      },
+
+      { type: "heading", text: "「了解！」なら Got it." },
+
+      { type: "paragraph", text: "もう一つだけ覚えるなら、" },
+      { type: "paragraph", text: "Got it." },
+      { type: "paragraph", text: "も便利です。" },
+
+      { type: "example", en: "Send this file by five.", ja: "5時までにこのファイルを送ってね。" },
+      { type: "example", en: "Got it!", ja: "了解！" },
+
+      { type: "paragraph", text: "指示や説明を理解して、" },
+      { type: "question", text: "「OK、わかった。」" },
+      { type: "paragraph", text: "と返すときによく使います。" },
+
+      { type: "insight", text: "I know. → 知ってる。I see. → なるほど。Got it. → 了解。" },
+
+      { type: "heading", text: "1分で覚えるなら" },
+
+      { type: "keyMessage", text: "「今わかった」なら、\nI see." },
+
+      { type: "paragraph", text: "次に英語で何かを説明してもらったら、" },
+      { type: "paragraph", text: "I know." },
+      { type: "paragraph", text: "ではなく、" },
+      { type: "paragraph", text: "I see." },
+      { type: "paragraph", text: "と返してみてください。" },
+      { type: "paragraph", text: "たった一言ですが、会話がぐっと自然になります。" },
+    ],
+    editorNote: [
+      "日本語では「わかった」の一言で済む場面でも、英語では「前から知っていたのか」「今理解したのか」で表現が変わります。",
+      "難しいルールとして覚える必要はありません。",
+      "I know. は「知ってる」。I see. は「なるほど」。",
+      "まずはこの2つだけ区別できれば十分です。",
+    ],
+    relatedCategorySlug: "online-eikaiwa",
+    relatedCategoryLabel: "オンライン英会話",
+    illustration: {
+      src: "/images/magazine/i-know-vs-i-see-editorial.png",
+      alt: "I know.はすでに知っている、I see.は今理解した、Got it.は了解という違いを会話例で比較したイラスト",
+      width: 1536,
+      height: 1024,
+      placement: "hero",
+    },
+  },
 ];
 
 export function getColumnBySlug(slug: string): Column | undefined {

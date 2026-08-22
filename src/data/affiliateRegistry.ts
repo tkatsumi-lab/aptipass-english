@@ -1,3 +1,4 @@
+import type { HTMLAttributeReferrerPolicy } from "react";
 import { services } from "./services";
 
 /**
@@ -56,6 +57,8 @@ export type AffiliateProgram = {
   trackingPixelUrl: string | null;
   /** Approved ad creative text, when the ASP provides one. */
   linkText: string | null;
+  /** Some ASPs (e.g. AccessTrade) specify a referrer-policy on their ad tag. Optional — omit when the ASP's creative doesn't call for one. */
+  referrerPolicy?: HTMLAttributeReferrerPolicy;
   /** Pages on this site where the program's link is (or will be) placed. */
   sitePlacementUrls: string[];
   /** True once the affiliate link is actually live on the site (drives the CTA Resolver). */
@@ -1008,6 +1011,31 @@ export const affiliatePrograms: AffiliateProgram[] = [
     priority: "MEDIUM",
     lastCheckedAt: "2026-08-20",
     notes: "第三者調査サイトでもしもアフィリエイトに案件ありと報告。子ども向けオンライン英会話でKidsカテゴリ記事との親和性あり。 参考URL: https://www.useful-notes.com/affiliate/global-crown/ [Affiliate Opportunity Full Inventory調査、2026-08-20実施。ユーザーから正式素材の提供がないためaffiliateUrlは空欄。]",
+  },
+  {
+    id: "global-crown-accesstrade",
+    serviceId: "global-crown",
+    asp: "アクセストレード",
+    advertiserName: null,
+    programName: "グローバルクラウン",
+    programId: null,
+    programScope: "GENERAL",
+    affiliateCapabilityStatus: "AVAILABLE",
+    affiliateStatus: "ACTIVE",
+    affiliateUrl: "https://h.accesstrade.net/sp/cc?rk=0100l77300oxl5",
+    trackingPixelUrl: "https://h.accesstrade.net/sp/rr?rk=0100l77300oxl5",
+    linkText: "グローバルクラウン",
+    referrerPolicy: "no-referrer-when-downgrade",
+    sitePlacementUrls: ["https://english.aptipass.com/services/global-crown"],
+    affiliateImplemented: true,
+    adUrlSubmissionRequired: null,
+    adUrlSubmitted: false,
+    adUrlSubmittedAt: null,
+    prDisclosureReady: true,
+    priority: null,
+    lastCheckedAt: "2026-08-22",
+    notes:
+      "運営者から提供されたHuman Verified Fact（アクセストレード提携承認済み、正式広告コード提供）。既存services.tsのglobal-crown（categories: [\"kids\"]、3歳〜中学生向けバイリンガル講師オンライン英会話）と内容が一致しているため、Service側の変更は不要と判断。別ASP（もしもアフィリエイト、global-crown-inventory、affiliateStatus: null）は未確認の別リードとして変更せず残置し、本行を新規Programとして追加した。ASP提供コードのrel=\"nofollow\"は、既存サイト側の共通rel=\"sponsored nofollow noopener\"（src/lib/ctaResolver.ts）で既に満たされているため個別変更していない。referrerPolicyはASP提供コード通りno-referrer-when-downgradeを設定（AffiliateProgram型へoptionalフィールドとして追加、他ASPでも再利用可能）。広告掲載URL（https://english.aptipass.com/services/global-crown）はまだユーザーがアクセストレード側へ提出したか確認できていないためadUrlSubmitted: falseのまま。adUrlSubmissionRequiredもアクセストレードでの要否が未確認のためnull。",
   },
   {
     id: "novakid-inventory",

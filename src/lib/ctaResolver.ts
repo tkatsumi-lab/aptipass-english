@@ -1,3 +1,4 @@
+import type { HTMLAttributeReferrerPolicy } from "react";
 import { getLiveProgram } from "@/data/affiliateRegistry";
 import type { Service } from "@/data/services";
 
@@ -8,6 +9,8 @@ export type ResolvedCta = {
   rel: string;
   /** A8-style 1x1 conversion pixel to render alongside an affiliate link, if required. */
   trackingPixelUrl: string | null;
+  /** Some ASPs (e.g. AccessTrade) specify this on their ad tag — see AffiliateProgram.referrerPolicy. */
+  referrerPolicy: HTMLAttributeReferrerPolicy | null;
 };
 
 /**
@@ -31,6 +34,7 @@ export function resolveCta(service: Service): ResolvedCta | null {
       label: program.linkText ?? `${service.name}の公式サイトを見る`,
       rel: "sponsored nofollow noopener",
       trackingPixelUrl: program.trackingPixelUrl,
+      referrerPolicy: program.referrerPolicy ?? null,
     };
   }
 
@@ -41,6 +45,7 @@ export function resolveCta(service: Service): ResolvedCta | null {
       label: "公式サイトを見る",
       rel: "noopener noreferrer",
       trackingPixelUrl: null,
+      referrerPolicy: null,
     };
   }
 
